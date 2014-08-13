@@ -5,7 +5,7 @@ import java.util.Hashtable;
 
 public class Project implements Comparable<Project>{
     private Integer local_id;
-    private Integer remote_id;
+    private Integer remote_id = null;
     private String name;
     private String description;
     private Dictionary experiments = new Hashtable();

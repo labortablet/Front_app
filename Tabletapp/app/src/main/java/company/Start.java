@@ -1,0 +1,249 @@
+package company;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+
+import com.example.test1.tabletapp.app.R;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Created by Grit on 29.05.2014.
+ */
+
+public class Start extends Activity {
+    // Variablen Deklaration / Instanzvariable:
+
+    //private LocalService mBoundService;
+    public String Server;
+    public String email;
+    public String password;
+    private static String[] user_data = new String[3];
+
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    private Matcher matcher;
+    private Pattern pattern;
+    private static String[][] project = new String[10][20];
+
+    boolean mIsBound;
+
+    EditText text;
+    EditText text2;
+    EditText text3;
+
+    public Start() {  //Construktor
+        super();
+
+        // Initialisierung der Variablen
+        mIsBound = false;
+        Server = null;
+        email = null;
+        password = null;
+        pattern = Pattern.compile(EMAIL_PATTERN);
+
+        project[0][0] = "test";
+        project[1][0] = "test1";
+        project[2][0] = "test2";
+        project[3][0] = null;
+        project[4][0] = null;
+        project[0][1] = "test";
+        project[1][1] = "test1";
+
+        project[0][2] = "Test3";
+
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.start_show);
+        //doBindService();
+        ActivityRegistry.register(this);
+
+
+    } // Standart Android Methoden für apps
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.start, menu);
+        return true;
+    }  // Standart Android Methoden für apps
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }  // Standart Android Methoden für apps
+
+
+    public void buttonEventHandler(View v) {  // butten events
+
+        switch (v.getId()) {  // switch ID button
+
+            case R.id.button:   // button Login TODO: Loginfunct. von background app aufrufen
+                text = (EditText) findViewById(R.id.editText);
+                text2 = (EditText) findViewById(R.id.editText2);
+                text3 = (EditText) findViewById(R.id.editText3);
+
+
+
+
+        try {
+            if (!text.getText().toString().isEmpty() && !text2.getText().toString().isEmpty() && !text3.getText().toString().isEmpty()) { //Abfrage ob textfelder des logins leer sind
+
+
+                if (validate(text2.getText().toString())) { // abfrage der korrektheit der email
+
+                    Server = text.getText().toString();
+                    email = text2.getText().toString();
+                    password = text3.getText().toString();
+
+                    int i = 0;
+
+                    setUser_Data(Server, email, password);
+
+                    i = Connect.login_server(Server, email, password);
+
+
+                    switch (i) {
+                        case 0:
+                            start_NewActivity();
+                            break;
+                        case 1:
+
+                            break;
+
+                        case 2:
+
+                            break;
+
+                    }
+
+
+                } else {
+                    Popup popup2 = new Popup();            // Popup für email
+                    popup2.set_String(R.string.popup2);
+                    popup2.show(getFragmentManager(), "this");
+
+                }
+            } else {
+                Popup popup = new Popup();
+                popup.set_String(R.string.popup);     // Popup für leere felder
+                popup.show(getFragmentManager(), "this");
+            }
+        } catch (NullPointerException e) {
+            //Nullpointer exeption
+        }
+                break;
+
+            case R.id.button2:   // button exit
+                ActivityRegistry.finishAll(); // exit button
+                System.exit(0);
+                break;
+
+        }
+    }
+
+    // Diese methoden können bisher noch ignoriert werden sie dienen dazu den service hinterher einzubinden wenn er dann läuft.
+   /* private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            mBoundService = ((LocalService.LocalBinder)service).getService();
+
+
+            Toast.makeText(Start.this, R.string.local_service_connected,
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            // Because it is running in our same process, we should never
+            // see this happen.
+            mBoundService = null;
+            Toast.makeText(Start.this, R.string.local_service_disconnected,
+                    Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    void doBindService() {
+
+        bindService(new Intent(Start.this,
+                LocalService.class), mConnection, Context.BIND_AUTO_CREATE);
+         mIsBound = true;
+    }
+
+    void doUnbindService() {
+        if (mIsBound) {
+
+            unbindService(mConnection);
+            mIsBound = false;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        doUnbindService();
+    }
+    */
+    public boolean validate(final String hex) {
+
+        matcher = pattern.matcher(hex);
+        return matcher.matches();
+
+    }
+
+    public static void setUser_Data(String server_adr, String email, String password) {
+
+        user_data[0] = server_adr;
+        user_data[1] = email;
+        user_data[2] = password;
+    }
+
+    public static String get_Server_Adr() {
+        return user_data[0];
+    }
+
+    public static String get_Email() {
+        return user_data[1];
+    }
+
+    public static String get_Password() {
+        return user_data[2];
+    }
+
+
+    public static void set_Project(String[][] Project) {
+        project = Project;
+    }
+
+    public static String[][] get_Projekts() {
+        return project;
+    }
+
+    private void start_NewActivity() {
+
+        Intent intent = new Intent(this, Project_show.class);
+        startActivity(intent);
+    }
+}
+
+
