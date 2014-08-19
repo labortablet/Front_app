@@ -12,7 +12,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.Scanner;
-//import android.util.Base64;
+import android.util.Base64;
 
 public class ServerDatabaseSession {
 	private String session_id;
@@ -33,24 +33,29 @@ public class ServerDatabaseSession {
 //they already arrive as a String because of the utf-8 transport
 //not working on a normal pc as we need the andoid stubs
 	private byte[] uni2bin(String uni) throws SBSBaseException {
-		try {
-			byte[] ascii_encoded_bytes = uni.getBytes("ASCII");
-			return Base64.decode(ascii_encoded_bytes);//  Base64.DEFAULT);
-		} catch (UnsupportedEncodingException e) {
-			throw new SBSBaseException();
-		} catch (IOException e) { //needed for Base64
-			throw new SBSBaseException();
-		}
+		//try {
+			//byte[] ascii_encoded_bytes = uni.getBytes("ASCII");
+			//return imports.Base64.decode(ascii_encoded_bytes);
+			return Base64.decode(uni, Base64.DEFAULT);
+			//FIXME API needs to be changed to 8
+		//} catch (UnsupportedEncodingException e) {
+		//	throw new SBSBaseException();
+		//} catch (IOException e) { //needed for Base64
+		//	throw new SBSBaseException();
+		//}
 	}
 
 	private String bin2uni(byte[] bin) throws SBSBaseException {
 		//some changes are needed if I go back to the andoid version
-		byte[] base64_encoded_bytes = Base64.encodeBytesToBytes(bin); //, Base64.DEFAULT);
-		try {
-			return new String(base64_encoded_bytes, "ascii");
-		} catch (UnsupportedEncodingException e) {
-			throw new SBSBaseException();
-		}
+		//byte[] base64_encoded_bytes =  Base64.encode(bin, Base64.DEFAULT);
+		return Base64.encodeToString(bin, Base64.DEFAULT);
+		//FIXME API needs to be changed to 8
+		//byte[] base64_encoded_bytes = imports.Base64.encodeBytesToBytes(bin);
+		//try {
+		//	return new String(base64_encoded_bytes, "ascii");
+		//} catch (UnsupportedEncodingException e) {
+		//	throw new SBSBaseException();
+		//}
 	}
 
 	private JSONObject send_json(JSONObject message) throws SBSBaseException {
@@ -113,6 +118,7 @@ public class ServerDatabaseSession {
 	private byte[] calculate_response(byte[] salt, byte[] challenge)
 	{
 		return "a".getBytes(Charset.forName("UTF-8"));
+		//FIXME requires APi level 9
 	};
 
 	private void check_for_session() throws SBSBaseException {
