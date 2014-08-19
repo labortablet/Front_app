@@ -7,10 +7,10 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="C:\Users\Grit\Desktop\backup\Tabletapp" />
-            <option value="C:\Users\Grit\Desktop\backup\Tabletapp\app" />
-            <option value="C:\Users\Grit\Desktop\backup\Tabletapp\app2" />
-            <option value="C:\Users\Grit\Desktop\backup\Tabletapp\app3" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/app2" />
+            <option value="$PROJECT_DIR$/app3" />
           </set>
         </option>
       </GradleProjectSettings>
