@@ -20,9 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
-    private static ArrayList<Boolean> img =  new ArrayList<Boolean>();
+    private ArrayList<Boolean> img =  new ArrayList<Boolean>();
     private Context _context;
     private List<String> _listDataHeader; // header titles
+    private List<String> _listDataDate = new ArrayList<String>();
     // child data in format of header title, child title
     private HashMap<String, List<String>> _listDataChild;
 
@@ -31,10 +32,26 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
-        img = Entry_show.getImg();
-
+    }
+    public ExpandableListAdapter(Context context, List<String> listDataHeader,
+                                 HashMap<String, List<String>> listChildData, ArrayList<Boolean> img) {
+        this._context = context;
+        this._listDataHeader = listDataHeader;
+        this._listDataChild = listChildData;
+        this.img = img;
 
     }
+    public ExpandableListAdapter(Context context, List<String> listDataHeader,
+                                 HashMap<String, List<String>> listChildData, ArrayList<Boolean> img,List<String> date) {
+        this._context = context;
+        this._listDataHeader = listDataHeader;
+        this._listDataChild = listChildData;
+        this.img = img;
+        this._listDataDate = date;
+
+    }
+
+
 
 
 
@@ -90,9 +107,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return groupPosition;
     }
 
-    public static void setImg(ArrayList<Boolean> img) {
-        ExpandableListAdapter.img = img;
-    }
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
@@ -108,6 +122,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.lblListHeader);
         ImageView img1 = (ImageView)convertView.findViewById(R.id.imageView);
+        TextView lbListDate = (TextView) convertView.findViewById(R.id.lblistdate);
+        lblListHeader.setTypeface(null, Typeface.BOLD);
+        lblListHeader.setText(headerTitle);
+
+       if(!_listDataDate.isEmpty())
+        {
+            if(!_listDataDate.get(groupPosition).trim().equals("empty"))
+                 lbListDate.setText(_listDataDate.get(groupPosition));
+        }
 
            if (!img.isEmpty()) {
                 if(img.get(groupPosition))
@@ -118,8 +141,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
             }
 
-        lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(headerTitle);
+
+
         return convertView;
     }
 

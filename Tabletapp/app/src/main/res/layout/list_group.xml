@@ -5,21 +5,36 @@
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/lblListHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:textSize="25sp"
-        android:textColor="@color/text_black" />
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <ImageView
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:id="@+id/imageView"
+        <TextView
+            android:id="@+id/lblListHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+            android:textSize="25sp"
+            android:textColor="@color/text_black" />
 
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <TextView
+            android:id="@+id/lblistdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-    </RelativeLayout>
+            android:textSize="25sp"
+            android:textColor="@color/text_black"
+             />
+    </TableRow>
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/imageView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+
+
+</RelativeLayout>

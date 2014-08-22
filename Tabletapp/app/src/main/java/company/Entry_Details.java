@@ -2,9 +2,11 @@ package company;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -93,7 +95,10 @@ private static List<ProjectExperimentEntry> projectExperimentEntries = Project_s
         switch (projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getAttachment_type())
         {
             case 1: // For Keyboard Entry
-                setContentView(R.layout.entry_keyboarddetails); // Setting Layout
+                if(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).isSync())
+                setContentView(R.layout.entry_keyboarddetails_synctrue); // Setting Layout
+                else
+                setContentView(R.layout.entry_keyboarddetails_syncfalse);
 
                 textView = (TextView)findViewById(R.id.textView2);
                 textView2 = (TextView)findViewById(R.id.textView4);
@@ -106,8 +111,10 @@ private static List<ProjectExperimentEntry> projectExperimentEntries = Project_s
                 textView4.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).get_user());
             break;
             case 2: //For Table Entry
-
-                 setContentView(R.layout.entry_tabledetails);  // Setting Layout
+                if(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).isSync())
+                 setContentView(R.layout.entry_tabledetails_synctrue);  // Setting Layout
+                else
+                setContentView(R.layout.entry_tabledetails_syncfalse);
 
                  textView = (TextView)findViewById(R.id.textView2);
                  textView2 = (TextView)findViewById(R.id.textView4);
@@ -127,14 +134,16 @@ private static List<ProjectExperimentEntry> projectExperimentEntries = Project_s
                             TableRow.LayoutParams.WRAP_CONTENT));
 
                     for (String string : s) {
-                        TextView tv = new TextView(this);
+                        EditText tv = new EditText(this);
                         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                                 TableRow.LayoutParams.WRAP_CONTENT));
 
                         tv.setPadding(5, 5, 5, 5);
                         tv.setText(string);
+                        tv.setKeyListener(null);
 
                         row.addView(tv);
+                        row.setGravity(Gravity.CENTER);
                     }
 
                     table.addView(row);

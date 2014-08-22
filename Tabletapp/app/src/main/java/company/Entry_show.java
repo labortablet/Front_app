@@ -28,16 +28,14 @@ public class Entry_show extends Activity {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
+    List<String> listDataDate;
     private Context _context;
 
-    private static ArrayList<Boolean> img =  new ArrayList<Boolean>();
+    private ArrayList<Boolean> img =  new ArrayList<Boolean>();
     View convertView ;
     HashMap<String, List<String>> listDataChild;
     public static Integer entry_Selected;
 
-    public static ArrayList<Boolean> getImg() {
-        return img;
-    }
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -53,7 +51,7 @@ public class Entry_show extends Activity {
 
             prepareListData();
 
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild, img, listDataDate);
 
 
 
@@ -68,12 +66,20 @@ public class Entry_show extends Activity {
     private void prepareListData() {
 
         listDataHeader = new ArrayList<String>();
+        listDataDate= new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
         // Adding child data
         try {
             for (int i = 0; i < projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().size(); i++) {
                 img.add(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).isSync());
+
                 listDataHeader.add(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).get_title());
+
+               if(!projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).get_entry_time().isEmpty()) {
+                   listDataDate.add("   entry date: " + projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).get_entry_time());
+               }
+                else
+                   listDataDate.add("empty");
                 List<String> list = new ArrayList<String>();
                 switch (projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getAttachment_type()) {
                     case 1:
@@ -134,10 +140,13 @@ public class Entry_show extends Activity {
      */
     protected void onResume(){
         img.clear();
+        listDataChild.clear();
+        listDataDate.clear();
+        listDataHeader.clear();
         super.onResume();
         projectExperimentEntries = Project_show.getProjectExperimentEntries();
         prepareListData();
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild,img,listDataDate);
         expListView.setAdapter(listAdapter);
     }
 

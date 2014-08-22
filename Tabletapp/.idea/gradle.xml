@@ -7,10 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/app2" />
-            <option value="$PROJECT_DIR$/app3" />
+            <option value="C:\Users\Grit\Desktop\Repo front app\Tabletapp" />
+            <option value="C:\Users\Grit\Desktop\Repo front app\Tabletapp\app" />
           </set>
         </option>
       </GradleProjectSettings>

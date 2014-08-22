@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 
 import com.example.test1.tabletapp.app.R;
@@ -26,7 +27,7 @@ public class Project_show extends Activity {
 
     private static List<ExperimentEntry>  experimentEntries;
     private static List<ExperimentEntry>  experimentEntries1;
-   private static List<ProjectExperimentEntry> projectExperimentEntries;
+    private static List<ProjectExperimentEntry> projectExperimentEntries;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
@@ -124,6 +125,17 @@ public class Project_show extends Activity {
 
 
 // Listview on child click listener
+ /*
+            expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener(){
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+
+                startNew_action2(projectExperimentEntries.get(groupPosition).getProject().get_name(),projectExperimentEntries.get(groupPosition).getProject().get_description());
+                return false;
+            }
+        }); */
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
@@ -131,19 +143,29 @@ public class Project_show extends Activity {
                                         int groupPosition, int childPosition, long id) {
                 experiment_Selected = childPosition;
                 project_Selected = groupPosition;
-                startnew_action();
+                startNew_action();
                 return false;
             }
         });
-            expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
                 @Override
-                public void onGroupExpand(int groupPosition) {
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    long packedPosition = expListView.getExpandableListPosition(position);
+                    if (ExpandableListView.getPackedPositionType(packedPosition) ==
+                            ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                        // get item ID's
+                        startNew_action1(projectExperimentEntries.get(ExpandableListView.getPackedPositionGroup(packedPosition)).getExperimentEntry().get(ExpandableListView.getPackedPositionChild(packedPosition)).getExperiments().get_name(), projectExperimentEntries.get(ExpandableListView.getPackedPositionGroup(packedPosition)).getExperimentEntry().get(ExpandableListView.getPackedPositionChild(packedPosition)).getExperiments().get_description());
+                    }
+                        if (ExpandableListView.getPackedPositionType(packedPosition) ==
+                                ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+                            startNew_action2(projectExperimentEntries.get(ExpandableListView.getPackedPositionGroup(packedPosition)).getProject().get_name(),projectExperimentEntries.get(ExpandableListView.getPackedPositionGroup(packedPosition)).getProject().get_description());
 
-
-
+                        // return true as we are handling the event.
+                        return true;
+                    }
+                    return false;
                 }
-
             });
     }
 
@@ -190,9 +212,25 @@ public class Project_show extends Activity {
         }
     }
 
-    private void startnew_action(){
+    private void startNew_action(){
         Intent intent;
         intent = new Intent(this, Entry_show.class);
+        startActivity(intent);
+
+    }
+    private void startNew_action1(String name,String description){
+        Intent intent;
+        intent = new Intent(this, Experiment_Details.class);
+        intent.putExtra("name",name);
+        intent.putExtra("description", description);
+        startActivity(intent);
+
+    }
+    private void startNew_action2(String name,String description){
+        Intent intent;
+        intent = new Intent(this, Project_Details.class);
+        intent.putExtra("name",name);
+        intent.putExtra("description", description);
         startActivity(intent);
 
     }

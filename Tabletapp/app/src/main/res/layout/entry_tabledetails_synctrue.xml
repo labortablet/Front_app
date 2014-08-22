@@ -98,21 +98,45 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:gravity="center" />
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fillViewport="true"
+        android:padding="10dp"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+
+        android:layout_above="@+id/button"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/imageView">
+
 
     <TableLayout
         android:id="@+id/tableLayout2"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/textView6"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/button"
+        android:layout_height="wrap_content"
+
         android:gravity="center"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+
         android:showDividers="middle">
 
 
+
         </TableLayout>
+</ScrollView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sync_status"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/textView6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/richtig"
+        android:layout_below="@+id/textView7"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
