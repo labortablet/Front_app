@@ -30,7 +30,11 @@
   <string name="popup">You must fill in all fields, as otherwise we cannot process your login</string>
   // Ereigniss text für popup 1 das bei leeren feldern des logins auslöst
     // button   <string name="ok">OK</string>
-
+<string name="experiment_name">Experiment name:</string>
+    <string name="experiment_description">Experiment Description:</string>
+    <string name="project_name">Project name:</string>
+    <string name="project_description">Project Description:</string>
+   <string name="sync_status">Sync Status:</string>
     <string name="popup2">Please fill in a valid E-mail address</string>
     <string name="popup4">Entry name must be unique!</string>
  // Ereigniss text für popup 2 das bei inkorekter email eingabe auslöst

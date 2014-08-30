@@ -2,6 +2,7 @@ package company;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,6 +94,7 @@ public class Keyboard_entry extends Activity {
 
         title = (EditText) findViewById(R.id.editText2);
         content = (EditText) findViewById(R.id.editText);
+        content.setGravity(Gravity.CENTER);
     } // Standart Android Methoden für apps
 
 

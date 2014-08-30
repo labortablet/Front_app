@@ -2,6 +2,7 @@
 
 
 
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -39,22 +40,11 @@
         android:onClick="buttonEventHandler"
         android:layout_gravity="right"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/tableLayout1"
-        android:layout_alignEnd="@+id/tableLayout1" />
-
-    <TableLayout
-        android:id="@+id/tableLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        android:shrinkColumns="*"
-        android:stretchColumns="*"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button"
-        android:layout_below="@+id/editText">
+        android:layout_alignRight="@+id/scrollView"
+        android:layout_alignEnd="@+id/scrollView" />
 
 
-    </TableLayout>
+
 
     <EditText
         android:layout_width="wrap_content"
@@ -64,10 +54,33 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button2"
-        android:layout_alignEnd="@+id/button2"
         android:gravity="center"
-        android:text="@string/title" />
+        android:text="@string/title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fillViewport="true"
+        android:padding="10dp"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/editText"
+        android:layout_above="@+id/button"
+        android:id="@+id/scrollView">
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
+
+
+
+    </TableLayout>
+    </ScrollView>
 
 </RelativeLayout>
 

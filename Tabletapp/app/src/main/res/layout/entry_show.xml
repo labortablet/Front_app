@@ -38,6 +38,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fillViewport="true"
+        android:padding="10px"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_above="@+id/button"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/Experimen_view">
+
     <ExpandableListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,6 +55,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/button" />
+
+    </ScrollView>
 
     <Button
         android:layout_width="wrap_content"
