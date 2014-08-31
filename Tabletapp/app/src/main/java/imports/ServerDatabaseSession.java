@@ -48,7 +48,6 @@ public class ServerDatabaseSession {
         //byte[] ascii_encoded_bytes = uni.getBytes("ASCII");
         //return imports.Base64.decode(ascii_encoded_bytes);
         return Base64.decode(uni, Base64.DEFAULT);
-        //FIXME API needs to be changed to 8
         //} catch (UnsupportedEncodingException e) {
         //	throw new SBSBaseException();
         //} catch (IOException e) { //needed for Base64
@@ -128,7 +127,6 @@ public class ServerDatabaseSession {
     private byte[] calculate_response(byte[] salt, byte[] challenge)
     {
         return "a".getBytes(Charset.forName("UTF-8"));
-        //FIXME requires APi level 9
     }
 
     private void check_for_session() throws SBSBaseException {
@@ -240,8 +238,6 @@ public class ServerDatabaseSession {
     }
 
 
-
-
     public LinkedList<Experiment> get_experiments() throws SBSBaseException {
         this.check_for_session();
         JSONObject request = new JSONObject();
@@ -286,7 +282,33 @@ public class ServerDatabaseSession {
         return remoteExperiment_list;
     }
 
-    public Integer[] get_last_entry_ids(Integer session_id, Integer experiment_id, Integer entry_count){return null;};
+    public Integer[] get_last_entry_ids(Integer session_id, Integer experiment_id, Integer entry_count){
+        this.check_for_session();
+        JSONObject request = new JSONObject();
+        System.out.println("Success0");
+        try {
+            request.put("action", "get_last_entry_ids");
+            request.put("session_id", this.session_id);
+            request.put("entry_count", entry_count);
+        } catch (JSONException e) {
+            //should be impossible as we add a valid parameter to the json
+            throw new SBSBaseException();
+        }
+        JSONObject result = this.send_json(request);
+        this.check_for_success(result);
+
+        JSONArray entry_id_list = null;
+        try {
+            entry_id_list = result.getJSONArray("entry_ids");
+        } catch (JSONException e) {
+            throw new SBSBaseException();
+        }
+        Integer[] entry_ids = new Integer[entry_id_list.length()];
+        for (int i = 0; i < entry_id_list.length(); i++) {
+            entry_ids[i] = Integer(entry_id_list[i]);
+        }
+        return entry_ids;
+    };
 
     public Entry get_entry(Integer entry_id) {
         return null;
