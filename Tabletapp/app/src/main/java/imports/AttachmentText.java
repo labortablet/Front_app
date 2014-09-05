@@ -9,4 +9,8 @@ public class AttachmentText extends AttachmentBase{
 	public AttachmentText(String text){
 		this.text = text;
 	};
+
+    public String getText() {
+        return text;
+    }
 };

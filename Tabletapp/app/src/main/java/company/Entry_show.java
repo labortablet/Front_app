@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 
 import com.example.test1.tabletapp.app.R;
@@ -14,6 +16,9 @@ import com.example.test1.tabletapp.app.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import imports.AttachmentTable;
+import imports.AttachmentText;
 
 /**
  * @author  Grit on 19.07.2014.
@@ -29,7 +34,9 @@ public class Entry_show extends Activity {
     ExpandableListView expListView;
     List<String> listDataHeader;
     List<String> listDataDate;
+    List<String> debugList;
     private Context _context;
+
 
     private ArrayList<Boolean> img =  new ArrayList<Boolean>();
     View convertView ;
@@ -50,7 +57,7 @@ public class Entry_show extends Activity {
         // preparing list data
 
             prepareListData();
-
+        for (String aDebugList : debugList) Log.d("debug",aDebugList);
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild, img, listDataDate);
 
 
@@ -66,28 +73,38 @@ public class Entry_show extends Activity {
     private void prepareListData() {
 
         listDataHeader = new ArrayList<String>();
-        listDataDate= new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        listDataDate   = new ArrayList<String>();
+        listDataChild  = new HashMap<String, List<String>>();
+        debugList = new ArrayList<String>();
+
         // Adding child data
         try {
             for (int i = 0; i < projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().size(); i++) {
+
                 img.add(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).isSync());
 
-                listDataHeader.add(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).get_title());
+                listDataHeader.add(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getTitle());
 
-               if(!projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).get_entry_time().isEmpty()) {
-                   listDataDate.add("   entry date: " + projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).get_entry_time());
+               if(!projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getEntry_time().isEmpty()) {
+                   listDataDate.add("   entry date: " + projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getEntry_time());
                }
-                else
+                else {
                    listDataDate.add("empty");
+               }
+
+
                 List<String> list = new ArrayList<String>();
                 switch (projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getAttachment_type()) {
                     case 1:
-                        list.add(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getAttachment());
+
+                        AttachmentText text = (AttachmentText) projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getAttachment();
+                        list.add(  text.getText() );
+                        debugList.add(text.getText());
                         break;
 
                     case 2:
-                        String[][] strings = projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getTable_array();
+                        AttachmentTable table = (AttachmentTable) projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getAttachment();
+                        String[][] strings = table.getTable_array();
                         for (String[] s : strings) {
                             String temp = "";
                             for (String string : s) {
@@ -100,8 +117,23 @@ public class Entry_show extends Activity {
                         break;
 
                 }
-                listDataChild.put(listDataHeader.get(i), list);
 
+
+expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        long packedPosition = expListView.getExpandableListPosition(position);
+                        if (ExpandableListView.getPackedPositionType(packedPosition) ==
+                                ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+
+                            entry_Selected = position;
+                            startnew_action1();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
 
                 expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
@@ -114,8 +146,9 @@ public class Entry_show extends Activity {
                     }
                 });
 
+                listDataChild.put(listDataHeader.get(i), list);
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
     /**

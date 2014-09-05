@@ -48,7 +48,7 @@ public class Keyboard_entry extends Activity {
             case R.id.button3:
                 if (
                         !(title.getText().toString().trim().isEmpty())) {
-                    if (!unique_Test(title.getText().toString())) {
+                   if (!unique_Test(title.getText().toString())) {
                         try {
 
 
@@ -56,13 +56,13 @@ public class Keyboard_entry extends Activity {
                             String title1 = title.getText().toString();
                             experiment_Selected = Project_show.getExperiment_Selected();
 
-
-                            projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(new Entry(0, title1, attachment, "", lablet.getCurrentTimeStamp(), Start.get_Email(), experiment_Selected,false));
+                            Entry edit = new Entry(0,0, title1, attachment, "", Lablet_Functions.getCurrentTimeStamp(), Start.get_Email(), experiment_Selected,false);
+                            projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(edit);
 
                             Project_show.setProjectExperimentEntries(projectExperimentEntries);
                             this.finish();
 
-                        } catch (Exception e) {
+                        } catch (Exception ignored) {
                         }
                     } else {
                         Popup popup = new Popup();            // Popup für leeren title
@@ -70,8 +70,8 @@ public class Keyboard_entry extends Activity {
                         popup.show(getFragmentManager(), "this");
 
 
-                    }
-                } else {
+                    }}
+                 else {
                     Popup popup = new Popup();            // Popup für leeren title
                     popup.set_String(R.string.popup3);
                     popup.show(getFragmentManager(), "this");
@@ -95,7 +95,7 @@ public class Keyboard_entry extends Activity {
         title = (EditText) findViewById(R.id.editText2);
         content = (EditText) findViewById(R.id.editText);
         content.setGravity(Gravity.CENTER);
-    } // Standart Android Methoden für apps
+} // Standart Android Methoden für apps
 
 
 
@@ -122,20 +122,18 @@ public class Keyboard_entry extends Activity {
 
 
 
-    private boolean unique_Test(String string) {
+     private boolean unique_Test(String string) {
         boolean unique = false;
 
 
         for (int i = 0;  i < projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().size(); i++) {
-            if (projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).get_title().equals(string))
-
+            if (projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getTitle().equals(string))
             {
               unique = true;
                 break;
             }
             else
                 unique = false;
-
         }
 return unique;
     }

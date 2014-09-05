@@ -77,7 +77,7 @@ public class Table_entry extends Activity {
                 String title1 = text.getText().toString();
 
 
-                projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(new Entry(0,title1,null,getCurrentTimeStamp(),Start.get_Email(),experiment_Selected,string_array,false));
+                projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(new Entry(0,1,title1,null,getCurrentTimeStamp(),Start.get_Email(),experiment_Selected,string_array,false));
                 Project_show.setProjectExperimentEntries(projectExperimentEntries);
                 this.finish();
 
@@ -202,7 +202,7 @@ public class Table_entry extends Activity {
 
 
         for (int i = 0;  i < projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().size(); i++) {
-            if (projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).get_title().equals(string))
+            if (projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(i).getTitle().equals(string))
 
             {
                 unique = true;

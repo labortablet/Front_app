@@ -63,26 +63,26 @@ public class Project_show extends Activity {
         entries1 = new ArrayList<Entry>() ;
         entries2 = new ArrayList<Entry>();
 
-        entries1.add(new Entry(1,"hallo","Inhalt 1","","","",1,true));
-        entries1.add(new Entry(2,"hallo2","Inhalt 2","","","",1,true));
+        entries1.add(new Entry(1,1,"hallo","Inhalt 1","","","",1,true));
+        entries1.add(new Entry(2,2,"hallo1","Inhalt 2","","","",1,true));
 
-        entries2.add(new Entry(1,"1234","Inhalt 1","","","",1,true  ));
-        entries2.add(new Entry(2,"1342","Inhalt 2","","","",1,true));
+        entries2.add(new Entry(1,1,"1234","Inhalt 1","","","",1,true  ));
+        entries2.add(new Entry(2,1,"1342","Inhalt 2","","","",1,true));
 
-        entries.add(new Entry(1,"test","","","","",1,true));
-        entries.add(new Entry(2,"test2","","","","",1,true));
-        entries.add(new Entry(1,"test3","","","","",1,true));
-        entries.add(new Entry(2,"test4","","","","",1,true));
+        entries.add(new Entry(1,2,"test","","","","",1,true));
+        entries.add(new Entry(2,2,"test2","","","","",1,true));
+        entries.add(new Entry(1,3,"test3","","","","",1,true));
+        entries.add(new Entry(2,3,"test4","","","","",1,true));
         experimentEntries = new ArrayList<ExperimentEntry>();
         experimentEntries1 = new ArrayList<ExperimentEntry>();
 
-        experimentEntries1.add(new ExperimentEntry(new Experiment(1,1,"Experiment1","beschreibung1"),entries2));
+        experimentEntries1.add(new ExperimentEntry(new Experiment(1,1,"Experiment3","beschreibung1"),entries2));
 
         projectExperimentEntries = new ArrayList<ProjectExperimentEntry>();
 
 
         experimentEntries.add(new ExperimentEntry(new Experiment(1,1,"Experiment1","beschreibung1"),entries));
-        experimentEntries.add(new ExperimentEntry(new Experiment(2,1,"Experiment2","beschreibung2"),entries1));
+        experimentEntries.add(new ExperimentEntry(new Experiment(2,1,"Experiment1","beschreibung2"),entries1));
 
 
 

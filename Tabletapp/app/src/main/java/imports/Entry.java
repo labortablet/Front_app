@@ -1,4 +1,5 @@
 package imports;
+
 /*
 *
 * This Class is for building the Entry object we need in the Activity
@@ -8,11 +9,17 @@ package imports;
 
 public class Entry implements Comparable<Entry> {
     /**
+     *This is the Local ID an Entry can gets From the tab.
+     * @value
+     * @since 1.0
+     */
+    private Integer local_id;
+    /**
      *This is the Remote ID an Entry can get if it comes from the Server.
      * @value
      * @since 1.0
      */
-    private Integer id;
+    private Integer remote_id;
     /**
      *This is the title of an Entry
      * @value
@@ -20,11 +27,11 @@ public class Entry implements Comparable<Entry> {
      */
     private String title;
     /**
-     *This is the Attachment a Keyboard entry hold.
+     *This is the Attachment Object Where every entry hold its content.
      * @value
      * @since 1.0
      */
-    private String attachment; //no access yet
+    private Object attachment; //no access yet
     /**
      *This is the Attachment Typ every Entry got.
      * @value
@@ -62,7 +69,7 @@ public class Entry implements Comparable<Entry> {
      * @since 1.0
      */
 
-private boolean sync = false;
+    private boolean sync;
 
     /**This is a 2D array which holds the content of the Table.
      *
@@ -70,20 +77,10 @@ private boolean sync = false;
      * @since 1.0
      */
 
-    private String[][] table_array;
-    /**
-     * Returns the 2D Array, which holds the content of the Table
-     * @return   table_array
-     */
-    public String[][] getTable_array() {
-        return table_array;
-    }
-
-
-
     /**
      * Konstruktor For the Keyboard_entry
-     * @param id   The Remote ID
+     * @param rem_id   The Remote ID
+     *@param local_id The Local ID
      * @param title Title of the Entry
      *@param attachment Content of the Entry
      *@param sync_time Sync time of the Entry
@@ -93,11 +90,11 @@ private boolean sync = false;
      *@param sync The value which says if the Entry already on the Server
      */
 
-    public Entry(Integer id, String title, String attachment, String sync_time, String entry_time, String user, Integer experiment_id,boolean sync) {
-        this.id = id;
+    public Entry(Integer rem_id,int local_id, String title, String attachment, String sync_time, String entry_time, String user, Integer experiment_id,boolean sync) {
+        this.remote_id = rem_id;
+        this.local_id = local_id;
         this.title = title;
-
-        this.attachment = attachment;
+        this.attachment = new AttachmentText(attachment);
         this.attachment_type = 1;
         this.sync_time = sync_time;
         this.entry_time = entry_time;
@@ -118,13 +115,12 @@ private boolean sync = false;
      * @param sync  status of sync
      */
 
-    public void setSync(boolean sync) {
-        this.sync = sync;
-    }
+
 
     /**
      * Konstruktor For the Table_entry
-     * @param id   The Remote ID
+     * @param rem_id   The Remote ID
+     * @param local_id The Local ID
      * @param title Title of the Entry
      *@param sync_time Sync time of the Entry
      *@param entry_time Time when the entry was created
@@ -135,15 +131,16 @@ private boolean sync = false;
      *
      */
 
-    public Entry(Integer id, String title, String sync_time, String entry_time, String user, Integer experiment_id, String[][] array,boolean sync) {
-        this.id = id;
+    public Entry(Integer rem_id,int local_id, String title, String sync_time, String entry_time, String user, Integer experiment_id, String[][] array,boolean sync) {
+        this.remote_id = rem_id;
+        this.local_id = local_id;
         this.title = title;
         this.attachment_type = 2;
         this.sync_time = sync_time;
         this.entry_time = entry_time;
         this.user = user;
         this.experiment_id = experiment_id;
-        this.table_array = array;
+        this.attachment = new AttachmentTable(array);
         this.sync = sync;
 
 
@@ -152,55 +149,28 @@ private boolean sync = false;
 
     @Override
     public int compareTo(Entry other_entry) {
-        return this.entry_time.compareTo(other_entry.get_entry_time());
+        return this.entry_time.compareTo(other_entry.getEntry_time());
     }
 
 
-    public Integer get_id() {
-        return this.id;
+    public Integer getLocal_id() {
+        return local_id;
     }
 
-
-    public String get_title() {
-        return this.title;
-    }
-
-
-    public String get_sync_time() {
-        return this.sync_time;
-    }
-
-
-    public String get_entry_time() {
-        return this.entry_time;
-    }
-
-
-    public Integer get_experiment_id() {
-        return this.experiment_id;
-    }
-
-
-    public String get_user() {
-        return this.user;
-    }
-
-
-    public int getAttachment_type() {
-        return attachment_type;
-    }
-
-
-    public String getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
+    public Integer getRemote_id() {
+        return remote_id;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public Object getAttachment() {
+        return attachment;
+    }
+
+    public int getAttachment_type() {
+        return attachment_type;
     }
 
     public String getSync_time() {
@@ -211,5 +181,11 @@ private boolean sync = false;
         return entry_time;
     }
 
+    public String getUser() {
+        return user;
+    }
 
+    public Integer getExperiment_id() {
+        return experiment_id;
+    }
 }

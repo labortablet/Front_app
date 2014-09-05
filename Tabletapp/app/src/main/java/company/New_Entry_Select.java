@@ -67,7 +67,7 @@ public class New_Entry_Select extends Activity{
                 break;
             case R.id.button4: // new Table
                 try {
-                    if (row.getText().toString().isEmpty() == false && column.getText().toString().isEmpty() == false)
+                    if (!row.getText().toString().isEmpty() && !column.getText().toString().isEmpty())
                     {
                         start_NewActionTable(row.getText().toString(),column.getText().toString());
                         this.finish();

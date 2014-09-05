@@ -1,10 +1,10 @@
 package imports;
 
-import exceptions.SBSBaseException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
+
+import exceptions.SBSBaseException;
 
 public class ref_client {
 	public static void main(String[] args) {
@@ -25,8 +25,8 @@ public class ref_client {
 			System.out.println(e);
 		};
 		try {
-			LinkedList<RemoteProject> remoteProject_list = SDS.get_projects();
-			LinkedList<RemoteExperiment> remoteExperiment_list = SDS.get_experiments();
+			LinkedList<Project> remoteProject_list = SDS.get_projects();
+			LinkedList<Experiment> remoteExperiment_list = SDS.get_experiments();
 			System.out.println(remoteProject_list);
 			System.out.println(remoteExperiment_list);
 		} catch (SBSBaseException e) {

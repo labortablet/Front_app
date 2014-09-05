@@ -15,6 +15,9 @@ import com.example.test1.tabletapp.app.R;
 
 import java.util.List;
 
+import imports.AttachmentTable;
+import imports.AttachmentText;
+
 /**
  * @author  Grit on 02.08.2014.
  * Shows the Specified Entry Attributes
@@ -105,10 +108,11 @@ private static List<ProjectExperimentEntry> projectExperimentEntries = Project_s
                 textView3 = (TextView)findViewById(R.id.textView6);
                 textView4 = (TextView)findViewById(R.id.textView8);
 
-                textView.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).get_title());
-                textView2.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getAttachment());
-                textView3.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).get_entry_time());
-                textView4.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).get_user());
+                textView.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getTitle());
+                AttachmentText text = (AttachmentText) projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getAttachment();
+                textView2.setText(text.getText());
+                textView3.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getEntry_time());
+                textView4.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getUser());
             break;
             case 2: //For Table Entry
                 if(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).isSync())
@@ -121,11 +125,11 @@ private static List<ProjectExperimentEntry> projectExperimentEntries = Project_s
                  textView3 = (TextView)findViewById(R.id.textView6);
                  table = (TableLayout)findViewById(R.id.tableLayout2);
 
-                 textView.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).get_title());
-                 textView2.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).get_entry_time());
-                 textView3.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).get_user());
-
-                 String[][] strings =  projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getTable_array();
+                 textView.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getTitle());
+                 textView2.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getEntry_time());
+                 textView3.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getUser());
+                 AttachmentTable table1 = (AttachmentTable) projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getAttachment();
+                 String[][] strings = table1.getTable_array();
 
 
                 for(String[] s: strings) { // Starting Table output

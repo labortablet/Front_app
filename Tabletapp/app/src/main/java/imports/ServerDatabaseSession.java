@@ -282,7 +282,7 @@ public class ServerDatabaseSession {
         return remoteExperiment_list;
     }
 
-    public Integer[] get_last_entry_ids(Integer session_id, Integer experiment_id, Integer entry_count){
+    public Integer[] get_last_entry_ids(Integer session_id, Integer experiment_id, Integer entry_count) throws SBSBaseException {
         this.check_for_session();
         JSONObject request = new JSONObject();
         System.out.println("Success0");
@@ -303,9 +303,10 @@ public class ServerDatabaseSession {
         } catch (JSONException e) {
             throw new SBSBaseException();
         }
-        Integer[] entry_ids = new Integer[entry_id_list.length()];
+        Integer[] entry_ids;
+        entry_ids = new Integer[entry_id_list.length()];
         for (int i = 0; i < entry_id_list.length(); i++) {
-            entry_ids[i] = Integer(entry_id_list[i]);
+          //  entry_ids[i] = Integer(entry_id_list[i]);
         }
         return entry_ids;
     };
