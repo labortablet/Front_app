@@ -13,6 +13,8 @@ import com.example.test1.tabletapp.app.R;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import imports.User;
+
 /**
  * Created by Grit on 29.05.2014.
  */
@@ -20,12 +22,16 @@ import java.util.regex.Pattern;
 public class Start extends Activity {
     // Variablen Deklaration / Instanzvariable:
 
-    //private LocalService mBoundService;
-    public String Server;
-    public String email;
-    public String password;
-    private static String[] user_data = new String[3];
+    public static User getUser() {
+        return user;
+    }
 
+    public static void setUser(User user) {
+        Start.user = user;
+    }
+
+    //private LocalService mBoundService;
+private static User user;
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -39,15 +45,16 @@ public class Start extends Activity {
     EditText text;
     EditText text2;
     EditText text3;
+    private String Server;
+    private String email;
+    private String password;
 
     public Start() {  //Construktor
         super();
 
         // Initialisierung der Variablen
         mIsBound = false;
-        Server = null;
-        email = null;
-        password = null;
+
         pattern = Pattern.compile(EMAIL_PATTERN);
 
         project[0][0] = "test";
@@ -118,7 +125,7 @@ public class Start extends Activity {
 
                     int i = 0;
 
-                    setUser_Data(Server, email, password);
+                   user = new User(email, password);
 
                     i = Connect.login_server(Server, email, password);
 
@@ -211,24 +218,7 @@ public class Start extends Activity {
 
     }
 
-    public static void setUser_Data(String server_adr, String email, String password) {
 
-        user_data[0] = server_adr;
-        user_data[1] = email;
-        user_data[2] = password;
-    }
-
-    public static String get_Server_Adr() {
-        return user_data[0];
-    }
-
-    public static String get_Email() {
-        return user_data[1];
-    }
-
-    public static String get_Password() {
-        return user_data[2];
-    }
 
 
     public static void set_Project(String[][] Project) {

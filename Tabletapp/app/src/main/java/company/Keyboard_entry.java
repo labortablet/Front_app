@@ -12,7 +12,7 @@ import com.example.test1.tabletapp.app.R;
 
 import java.util.List;
 
-import imports.Entry;
+import imports.LocalEntry;
 import imports.Lablet_Functions;
 
 /**
@@ -56,7 +56,7 @@ public class Keyboard_entry extends Activity {
                             String title1 = title.getText().toString();
                             experiment_Selected = Project_show.getExperiment_Selected();
 
-                            Entry edit = new Entry(0,0, title1, attachment, "", Lablet_Functions.getCurrentTimeStamp(), Start.get_Email(), experiment_Selected,false);
+                            LocalEntry edit = new LocalEntry(title1, attachment, Lablet_Functions.getCurrentTimeStamp(), Start.getUser(),false);
                             projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(edit);
 
                             Project_show.setProjectExperimentEntries(projectExperimentEntries);

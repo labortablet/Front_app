@@ -13,6 +13,10 @@ public class User {
         this.pw_hash = pw_hash;
         this.user_email = user_email;
     }
+    public User(String user_email, String pw_hash){
+        this.pw_hash = pw_hash;
+        this.user_email = user_email;
+    }
 
     public String display(Boolean lastname_first, String separator){
         if(this.lastname != null && this.firstname != null){

@@ -311,7 +311,7 @@ public class ServerDatabaseSession {
         return entry_ids;
     };
 
-    public Entry get_entry(Integer entry_id) {
+    public LocalEntry get_entry(Integer entry_id) {
         return null;
     }
 

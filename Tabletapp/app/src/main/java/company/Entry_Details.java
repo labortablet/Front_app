@@ -20,12 +20,12 @@ import imports.AttachmentText;
 
 /**
  * @author  Grit on 02.08.2014.
- * Shows the Specified Entry Attributes
+ * Shows the Specified LocalEntry Attributes
  */
 public class Entry_Details extends Activity{
     /**
-     * This is the Entry Which is Selected for closer Details
-     * Selected Entry {@value} .
+     * This is the LocalEntry Which is Selected for closer Details
+     * Selected LocalEntry {@value} .
      *
      * @since 1.0
      */
@@ -33,7 +33,7 @@ public class Entry_Details extends Activity{
 private Integer entry_Selected = Entry_show.getEntry_Selected();
 
     /**
-     * This is the experiment, where the Entry  belongs to
+     * This is the experiment, where the LocalEntry  belongs to
      * Selected Experiment {@value} .
      *
      * @since 1.0
@@ -97,7 +97,7 @@ private static List<ProjectExperimentEntry> projectExperimentEntries = Project_s
         ActivityRegistry.register(this);
         switch (projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getAttachment_type())
         {
-            case 1: // For Keyboard Entry
+            case 1: // For Keyboard LocalEntry
                 if(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).isSync())
                 setContentView(R.layout.entry_keyboarddetails_synctrue); // Setting Layout
                 else
@@ -112,9 +112,9 @@ private static List<ProjectExperimentEntry> projectExperimentEntries = Project_s
                 AttachmentText text = (AttachmentText) projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getAttachment();
                 textView2.setText(text.getText());
                 textView3.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getEntry_time());
-                textView4.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getUser());
+                textView4.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getUser().display());
             break;
-            case 2: //For Table Entry
+            case 2: //For Table LocalEntry
                 if(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).isSync())
                  setContentView(R.layout.entry_tabledetails_synctrue);  // Setting Layout
                 else
@@ -127,7 +127,7 @@ private static List<ProjectExperimentEntry> projectExperimentEntries = Project_s
 
                  textView.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getTitle());
                  textView2.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getEntry_time());
-                 textView3.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getUser());
+                 textView3.setText(projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getUser().display());
                  AttachmentTable table1 = (AttachmentTable) projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().get(entry_Selected).getAttachment();
                  String[][] strings = table1.getTable_array();
 

@@ -2,7 +2,7 @@ package company;
 
 import java.util.List;
 
-import imports.Entry;
+import imports.LocalEntry;
 import imports.Experiment;
 
 /**
@@ -10,8 +10,8 @@ import imports.Experiment;
  */
 public class ExperimentEntry {
     private Experiment experiments;
-    private List<Entry> entriesList;
-    public ExperimentEntry(Experiment experiment, List<Entry> entries)
+    private List<LocalEntry> entriesList;
+    public ExperimentEntry(Experiment experiment, List<LocalEntry> entries)
 
     {
         experiments = experiment;
@@ -22,7 +22,7 @@ public class ExperimentEntry {
         return experiments;
     }
 
-    public List<Entry> getEntriesList() {
+    public List<LocalEntry> getEntriesList() {
         return entriesList;
     }
 

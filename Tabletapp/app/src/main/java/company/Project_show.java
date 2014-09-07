@@ -15,14 +15,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import imports.Entry;
 import imports.Experiment;
+import imports.LocalEntry;
 import imports.Project;
+import imports.User;
 
 public class Project_show extends Activity {
 
     private static int experiment_Selected;
     private static int project_Selected;
+    private User user;
 
 
     private static List<ExperimentEntry>  experimentEntries;
@@ -51,28 +53,29 @@ public class Project_show extends Activity {
     @Override
 
         public void onCreate(Bundle savedInstanceState) {
+        user = Start.getUser();
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.project_show);
         ActivityRegistry.register(this);
 
-        List<Entry> entries;
-        List<Entry> entries1;
-        List<Entry> entries2;
-        entries = new ArrayList<Entry>() ;
-        entries1 = new ArrayList<Entry>() ;
-        entries2 = new ArrayList<Entry>();
+        List<LocalEntry> entries;
+        List<LocalEntry> entries1;
+        List<LocalEntry> entries2;
+        entries = new ArrayList<LocalEntry>() ;
+        entries1 = new ArrayList<LocalEntry>() ;
+        entries2 = new ArrayList<LocalEntry>();
 
-        entries1.add(new Entry(1,1,"hallo","Inhalt 1","","","",1,true));
-        entries1.add(new Entry(2,2,"hallo1","Inhalt 2","","","",1,true));
+        entries1.add(new LocalEntry(1,"hallo","Inhalt 1","","",user,true));
+        entries1.add(new LocalEntry(2,"hallo1","Inhalt 2","","",user,true));
 
-        entries2.add(new Entry(1,1,"1234","Inhalt 1","","","",1,true  ));
-        entries2.add(new Entry(2,1,"1342","Inhalt 2","","","",1,true));
+        entries2.add(new LocalEntry(1,"1234","Inhalt 1","","",user,true  ));
+        entries2.add(new LocalEntry(2,"1342","Inhalt 2","","",user,true));
 
-        entries.add(new Entry(1,2,"test","","","","",1,true));
-        entries.add(new Entry(2,2,"test2","","","","",1,true));
-        entries.add(new Entry(1,3,"test3","","","","",1,true));
-        entries.add(new Entry(2,3,"test4","","","","",1,true));
+        entries.add(new LocalEntry(1,"test","","","",user,true));
+        entries.add(new LocalEntry(2,"test2","","","",user,true));
+        entries.add(new LocalEntry(1,"test3","","","",user,true));
+        entries.add(new LocalEntry(2,"test4","","","",user,true));
         experimentEntries = new ArrayList<ExperimentEntry>();
         experimentEntries1 = new ArrayList<ExperimentEntry>();
 

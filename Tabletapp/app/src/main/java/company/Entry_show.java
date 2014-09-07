@@ -152,7 +152,7 @@ expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         }
     }
     /**
-     * Returns the Selected Entry.
+     * Returns the Selected LocalEntry.
      * @return    ID of Selected entry.
      */
     public static Integer getEntry_Selected() {
@@ -169,7 +169,7 @@ expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
 
     /**
      * Android Lifecycle method
-     * After Adding a new Entry Reload the List of Entries
+     * After Adding a new LocalEntry Reload the List of Entries
      */
     protected void onResume(){
         img.clear();
@@ -223,7 +223,7 @@ expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
 
     }
     /**
-     * Starts the new Intent for Detail view of Entry
+     * Starts the new Intent for Detail view of LocalEntry
      */
     private void startnew_action1(){
         Intent intent;

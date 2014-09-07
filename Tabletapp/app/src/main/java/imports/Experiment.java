@@ -7,7 +7,7 @@ public class Experiment implements Comparable<Experiment> {
     private Integer id;
     private String name;
     private String description;
-    //private SortedSet<Entry> entrys = new TreeSet(); //we need to add an comparator here
+    //private SortedSet<LocalEntry> entrys = new TreeSet(); //we need to add an comparator here
 
     public Experiment(Integer project_id, Integer id, String name, String description) {
         this.project_id = project_id;

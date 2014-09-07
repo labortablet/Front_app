@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import imports.Entry;
+import imports.LocalEntry;
 
 /**
  * Created by Grit on 03.08.2014.
@@ -77,7 +77,7 @@ public class Table_entry extends Activity {
                 String title1 = text.getText().toString();
 
 
-                projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(new Entry(0,1,title1,null,getCurrentTimeStamp(),Start.get_Email(),experiment_Selected,string_array,false));
+                projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(new LocalEntry(title1,getCurrentTimeStamp(),Start.getUser(),string_array,false));
                 Project_show.setProjectExperimentEntries(projectExperimentEntries);
                 this.finish();
 
