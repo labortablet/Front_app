@@ -1,39 +1,30 @@
 package imports;
+import scon.RemoteExperiment;
 
 
+public class Experiment extends RemoteExperiment {
+    //private SortedSet<Entry> entrys = new TreeSet(); //we need to add an comparator here
 
-public class Experiment implements Comparable<Experiment> {
-    private Integer project_id;
-    private Integer id;
-    private String name;
-    private String description;
-    //private SortedSet<LocalEntry> entrys = new TreeSet(); //we need to add an comparator here
-
-    public Experiment(Integer project_id, Integer id, String name, String description) {
-        this.project_id = project_id;
-        this.id = id;
-        this.name = name;
-        this.description = description;
+    public Experiment(Integer project_id, String name) {
+        super(project_id, null, name, null);
     };
 
-    @Override
-    public int compareTo(Experiment other_experiment) {
-        return this.id.compareTo(other_experiment.get_id());
+    public Experiment(RemoteExperiment a){
+        super(a);
     };
 
-    public Integer get_id() {
-        return this.id;
+    public void set_id(Integer new_id){
+        this.id = new_id;
     };
 
-    public Integer get_project_id() {
-        return this.project_id;
+    public void set_description(String new_description){
+        this.description = new_description;
     };
 
-    public String get_name() {
-        return this.name;
-    };
-
-    public String get_description() {
-        return this.description;
+    public void update_by_remote(RemoteExperiment a){
+        this.id = a.get_id();
+        this.project_id = a.get_project_id();
+        this.description = a.get_description();
+        this.name = a.get_name();
     };
 }

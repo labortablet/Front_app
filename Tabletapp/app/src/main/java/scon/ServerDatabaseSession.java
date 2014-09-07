@@ -1,4 +1,4 @@
-package imports;
+package scon;
 
 import android.util.Base64;
 
@@ -24,6 +24,10 @@ import exceptions.NoServerConnectionException;
 import exceptions.NoValidSSLCert;
 import exceptions.SBSBaseException;
 import exceptions.ServerSideException;
+import scon.RemoteProject;
+import scon.RemoteEntry;
+import scon.RemoteExperiment;
+
 
 public class ServerDatabaseSession {
     private String session_id;
@@ -46,7 +50,7 @@ public class ServerDatabaseSession {
     private byte[] uni2bin(String uni) throws SBSBaseException {
         //try {
         //byte[] ascii_encoded_bytes = uni.getBytes("ASCII");
-        //return imports.Base64.decode(ascii_encoded_bytes);
+        //return scon.Base64.decode(ascii_encoded_bytes);
         return Base64.decode(uni, Base64.DEFAULT);
         //} catch (UnsupportedEncodingException e) {
         //	throw new SBSBaseException();
@@ -60,7 +64,7 @@ public class ServerDatabaseSession {
         //byte[] base64_encoded_bytes =  Base64.encode(bin, Base64.DEFAULT);
         return Base64.encodeToString(bin, Base64.DEFAULT);
         //FIXME API needs to be changed to 8
-        //byte[] base64_encoded_bytes = imports.Base64.encodeBytesToBytes(bin);
+        //byte[] base64_encoded_bytes = scon.Base64.encodeBytesToBytes(bin);
         //try {
         //	return new String(base64_encoded_bytes, "ascii");
         //} catch (UnsupportedEncodingException e) {
@@ -196,7 +200,7 @@ public class ServerDatabaseSession {
 
     public Boolean auth_session(byte[] response){return Boolean.TRUE;}
 
-    public LinkedList<Project> get_projects() throws SBSBaseException {
+    public LinkedList<RemoteProject> get_projects() throws SBSBaseException {
         this.check_for_session();
         JSONObject request = new JSONObject();
         try {
@@ -216,7 +220,7 @@ public class ServerDatabaseSession {
             throw new SBSBaseException();
         }
 
-        LinkedList<Project> remoteProject_list = new LinkedList<Project>();
+        LinkedList<RemoteProject> remoteProject_list = new LinkedList<RemoteProject>();
         for (int i = 0; i < project_json_array.length(); i++) {
             JSONArray project_json = null;
             Integer id = null;
@@ -227,7 +231,7 @@ public class ServerDatabaseSession {
                 id = project_json.getInt(0);
                 name = project_json.getString(1);
                 description = project_json.getString(2);
-                remoteProject_list.add(new Project(id, name, description));
+                remoteProject_list.add(new RemoteProject(id, name, description));
             } catch (JSONException e) {
                 //some project did not decode correctly
                 throw new SBSBaseException();
@@ -238,7 +242,7 @@ public class ServerDatabaseSession {
     }
 
 
-    public LinkedList<Experiment> get_experiments() throws SBSBaseException {
+    public LinkedList<RemoteExperiment> get_experiments() throws SBSBaseException {
         this.check_for_session();
         JSONObject request = new JSONObject();
         System.out.println("Success0");
@@ -259,7 +263,7 @@ public class ServerDatabaseSession {
         } catch (JSONException e) {
             throw new SBSBaseException();
         }
-        LinkedList<Experiment> remoteExperiment_list = new LinkedList<Experiment>();
+        LinkedList<RemoteExperiment> remoteExperiment_list = new LinkedList<RemoteExperiment>();
         for (int i = 0; i < experiment_json_array.length(); i++) {
             JSONArray experiment_json = null;
             Integer project_id = null;
@@ -272,7 +276,7 @@ public class ServerDatabaseSession {
                 id = experiment_json.getInt(1);
                 name = experiment_json.getString(2);
                 description = experiment_json.getString(3);
-                remoteExperiment_list.add(new Experiment(project_id, id, name, description));
+                remoteExperiment_list.add(new RemoteExperiment(project_id, id, name, description));
             } catch (JSONException e) {
                 //some project did not decode correctly
                 throw new SBSBaseException();
@@ -311,7 +315,7 @@ public class ServerDatabaseSession {
         return entry_ids;
     };
 
-    public LocalEntry get_entry(Integer entry_id) {
+    public RemoteEntry get_entry(Integer entry_id) {
         return null;
     }
 
