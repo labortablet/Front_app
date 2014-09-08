@@ -1,21 +1,9 @@
-package Services;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
-import android.util.Log;
-
-import com.example.test1.tabletapp.app.R;
-
-import java.lang.reflect.Array;
-
-import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
+package services;
 
 /**
  * Created by Grit on 19.06.2014.
  */
+/*
 public class DatabaseHandler extends SQLiteOpenHelper{
     // All Static variables
 
@@ -207,6 +195,7 @@ private boolean db_exist(){
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i2) {
 
-    }*/
+    }
 }
 
+*/

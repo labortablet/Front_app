@@ -24,9 +24,6 @@ import exceptions.NoServerConnectionException;
 import exceptions.NoValidSSLCert;
 import exceptions.SBSBaseException;
 import exceptions.ServerSideException;
-import scon.RemoteProject;
-import scon.RemoteEntry;
-import scon.RemoteExperiment;
 
 
 public class ServerDatabaseSession {
@@ -315,9 +312,7 @@ public class ServerDatabaseSession {
         return entry_ids;
     };
 
-    public RemoteEntry get_entry(Integer entry_id) {
-        return null;
-    }
+
 
 
 }

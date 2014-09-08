@@ -1,8 +1,12 @@
 package company;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import imports.User;
+import services.LocalService;
 
 /**
  * Created by Grit on 29.05.2014.
@@ -30,8 +35,11 @@ public class Start extends Activity {
         Start.user = user;
     }
 
-    //private LocalService mBoundService;
-private static User user;
+    private LocalService mBoundService;
+    private static User user;
+    LocalService mService;
+    boolean mBound = false;
+
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -168,6 +176,52 @@ private static User user;
 
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to LocalService
+        Intent intent = new Intent(this, LocalService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Unbind from the service
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+    }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            LocalService.LocalBinder binder = (LocalService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+
+
+
+
+
+
+
+
+
 
     // Diese methoden können bisher noch ignoriert werden sie dienen dazu den service hinterher einzubinden wenn er dann läuft.
    /* private ServiceConnection mConnection = new ServiceConnection() {

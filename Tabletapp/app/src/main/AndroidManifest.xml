@@ -52,11 +52,12 @@
             android:label="@string/app_name" >
         </activity>
         <service
-            android:name="com.example.test1.tabletapp.company.LocalService"
-            android:icon="@drawable/uni_siegen"
-            android:label="@string/service_name"
-            android:process=":my_process" >
-        </service>
+            android:label="Smart Spdate Service"
+            android:name="services.LocalService" >
+            </service>
+
+
+
 
         <activity
             android:name="company.Project_show"

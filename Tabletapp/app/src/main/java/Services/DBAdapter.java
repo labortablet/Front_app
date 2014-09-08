@@ -1,4 +1,4 @@
-package Services;
+package services;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +14,7 @@ import java.sql.SQLException;
 /**
  * Created by Grit on 26.06.2014.
  */
+/*
 public class DBAdapter extends SQLiteOpenHelper {
 
     private static String DB_PATH = "";
@@ -27,7 +28,7 @@ public class DBAdapter extends SQLiteOpenHelper {
      * Constructor
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
-     */
+     *
     private DBAdapter(Context context) {
         super(context, DB_NAME, null, 1);
         this.myContext = context;
@@ -42,7 +43,7 @@ public class DBAdapter extends SQLiteOpenHelper {
      * getting Instance
      * @param context
      * @return DBAdapter
-     */
+     *
     public static synchronized DBAdapter getDBAdapterInstance(Context context) {
         if (mDBConnection == null) {
             mDBConnection = new DBAdapter(context);
@@ -52,7 +53,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 
     /**
      * Creates an empty database on the system and rewrites it with your own database.
-     **/
+     **
     public void createDataBase() throws IOException {
         boolean dbExist = checkDataBase();
         if (dbExist) {
@@ -66,14 +67,14 @@ public class DBAdapter extends SQLiteOpenHelper {
                 copyDataBase();
             } catch (IOException e) {
                 throw new Error("Error copying database");
-            }*/
+            }*
         }
     }
 
     /**
      * Check if the database already exist to avoid re-copying the file each time you open the application.
      * @return true if it exists, false if it doesn't
-     */
+     *
     private boolean checkDataBase() {
         SQLiteDatabase checkDB = null;
         try {
@@ -94,7 +95,7 @@ public class DBAdapter extends SQLiteOpenHelper {
      * Copies your database from your local assets-folder to the just created
      * empty database in the system folder, from where it can be accessed and
      * handled. This is done by transfering bytestream.
-     * */
+     * *
     private void copyDataBase() throws IOException {
         // Open your local db as the input stream
         InputStream myInput = myContext.getAssets().open(DB_NAME);
@@ -117,7 +118,7 @@ public class DBAdapter extends SQLiteOpenHelper {
     /**
      * Open the database
      * @throws SQLException
-     */
+     *
     public void openDataBase() throws SQLException {
         String myPath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
@@ -126,7 +127,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 
     /**
      * Close the database if exist
-     */
+     *
     @Override
     public synchronized void close() {
         if (myDataBase != null)
@@ -136,7 +137,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 
     /**
      * Call on creating data base for example for creating tables at run time
-     */
+     *
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Create_Table_User);
@@ -144,7 +145,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 
     /**
      * can used for drop tables then call onCreate(db) function to create tables again - upgrade
-     */
+     *
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
@@ -155,4 +156,4 @@ public class DBAdapter extends SQLiteOpenHelper {
 
 
 
-    }
+    }*/

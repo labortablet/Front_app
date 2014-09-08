@@ -19,6 +19,8 @@ import imports.Experiment;
 import imports.LocalEntry;
 import imports.Project;
 import imports.User;
+import scon.RemoteExperiment;
+import scon.RemoteProject;
 
 public class Project_show extends Activity {
 
@@ -58,7 +60,7 @@ public class Project_show extends Activity {
 
         setContentView(R.layout.project_show);
         ActivityRegistry.register(this);
-
+        RemoteExperiment remote;
         List<LocalEntry> entries;
         List<LocalEntry> entries1;
         List<LocalEntry> entries2;
@@ -78,19 +80,21 @@ public class Project_show extends Activity {
         entries.add(new LocalEntry(2,"test4","","","",user,true));
         experimentEntries = new ArrayList<ExperimentEntry>();
         experimentEntries1 = new ArrayList<ExperimentEntry>();
-
-        experimentEntries1.add(new ExperimentEntry(new Experiment(1,1,"Experiment3","beschreibung1"),entries2));
+        remote = new RemoteExperiment(1,1,"Experiment3","beschreibung1");
+        experimentEntries1.add(new ExperimentEntry(new Experiment(remote),entries2));
 
         projectExperimentEntries = new ArrayList<ProjectExperimentEntry>();
 
+        remote = new RemoteExperiment(1,1,"Experiment2","beschreibung1");
+        experimentEntries.add(new ExperimentEntry(new Experiment(remote),entries));
+        remote = new RemoteExperiment(2,1,"Experiment1","beschreibung2");
+        experimentEntries.add(new ExperimentEntry(new Experiment(remote),entries1));
 
-        experimentEntries.add(new ExperimentEntry(new Experiment(1,1,"Experiment1","beschreibung1"),entries));
-        experimentEntries.add(new ExperimentEntry(new Experiment(2,1,"Experiment1","beschreibung2"),entries1));
 
-
-
-        projectExperimentEntries.add(new ProjectExperimentEntry(new Project(1,"Project1","Beschreibung 1"),experimentEntries));
-        projectExperimentEntries.add(new ProjectExperimentEntry(new Project(1,"Project2","Beschreibung 2"),experimentEntries1));
+        RemoteProject rempro = new RemoteProject(1,"Project1","Beschreibung 1");
+        projectExperimentEntries.add(new ProjectExperimentEntry(new Project(rempro),experimentEntries));
+        rempro = new RemoteProject(1,"Project2","Beschreibung 2");
+        projectExperimentEntries.add(new ProjectExperimentEntry(new Project(rempro),experimentEntries1));
 
 
 
