@@ -13,8 +13,10 @@ import com.example.test1.tabletapp.app.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
+import exceptions.SBSBaseException;
 import imports.Experiment;
 import imports.LocalEntry;
 import imports.Project;
@@ -52,9 +54,19 @@ public class Project_show extends Activity {
         return projectExperimentEntries;
     }
 
+
+
+
     @Override
 
         public void onCreate(Bundle savedInstanceState) {
+
+        try {
+            LinkedList<RemoteProject> remoteProject_list = Start.mService.getProjects();
+
+        } catch (SBSBaseException e) {
+            e.printStackTrace();
+        }
         user = Start.getUser();
         super.onCreate(savedInstanceState);
 

@@ -27,7 +27,7 @@
         android:layout_alignStart="@+id/editText2"
         android:layout_alignRight="@+id/editText2"
         android:layout_alignEnd="@+id/editText2"
-        android:text="text" />
+        android:text="https://lablet.vega.uberspace.de/scon/db.cgi" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
         android:id="@+id/editText2"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:text="sdfsd@gme.net" />
+        android:text="fredi@uni-siegen.de" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
         android:id="@+id/editText3"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
-        android:text="sdfsdf" />
+        android:text="sad" />
 
     <Button
         android:layout_width="wrap_content"

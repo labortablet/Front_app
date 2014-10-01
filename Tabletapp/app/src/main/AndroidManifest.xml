@@ -51,11 +51,13 @@
             android:name="company.Table_entry"
             android:label="@string/app_name" >
         </activity>
-        <service
-            android:label="Smart Spdate Service"
-            android:name="services.LocalService" >
-            </service>
 
+        <service android:name="company.LocalService">
+            <intent-filter>
+                <action android:name="de.whatthedroid.startedservices.WTDStartedActivity">
+                </action>
+            </intent-filter>
+        </service>
 
 
 

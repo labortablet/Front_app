@@ -18,7 +18,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import imports.User;
-import services.LocalService;
 
 /**
  * Created by Grit on 29.05.2014.
@@ -34,10 +33,12 @@ public class Start extends Activity {
     public static void setUser(User user) {
         Start.user = user;
     }
+    static LocalService mService;
 
-    private LocalService mBoundService;
+
+
     private static User user;
-    LocalService mService;
+
     boolean mBound = false;
 
     private static final String EMAIL_PATTERN =
@@ -84,6 +85,9 @@ public class Start extends Activity {
         setContentView(R.layout.start_show);
         //doBindService();
         ActivityRegistry.register(this);
+
+     //   Intent wtdservice = new Intent(this, LocalService.class);
+      //  startService(wtdservice);
 
 
     } // Standart Android Methoden für apps
@@ -132,9 +136,17 @@ public class Start extends Activity {
                     password = text3.getText().toString();
 
                     int i = 0;
+// TODO: ADD password hash funktion
 
                    user = new User(email, password);
 
+try {
+    mService.connect("https://lablet.vega.uberspace.de/scon/db.cgi", user);
+}
+catch (Exception E){
+
+
+}
                     i = Connect.login_server(Server, email, password);
 
 
@@ -195,7 +207,7 @@ public class Start extends Activity {
         }
     }
 
-    /** Defines callbacks for service binding, passed to bindService() */
+    /** Defines callbacks for service binding, passed to bindService()*/
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
@@ -207,11 +219,15 @@ public class Start extends Activity {
             mBound = true;
         }
 
+
+
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             mBound = false;
         }
     };
+
+
 
 
 
