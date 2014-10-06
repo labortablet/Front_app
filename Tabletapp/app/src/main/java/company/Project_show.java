@@ -63,6 +63,30 @@ public class Project_show extends Activity {
 
         try {
             LinkedList<RemoteProject> remoteProject_list = Start.mService.getProjects();
+            LinkedList<RemoteExperiment> remoteExperiment_list = Start.mService.getExperiments();
+
+            projectExperimentEntries = new ArrayList<ProjectExperimentEntry>();
+            ArrayList<LocalEntry> entries = new ArrayList<LocalEntry>();
+            experimentEntries = new ArrayList<ExperimentEntry>();
+
+            for (RemoteProject aRemoteProject_list : remoteProject_list) {
+
+                projectExperimentEntries.add(new ProjectExperimentEntry(new Project(aRemoteProject_list), experimentEntries));
+            }
+
+            for(int i = 0 ;i < remoteExperiment_list.size();i++) {
+                int ID = 0 ;
+               for(int j = 0 ; j< remoteProject_list.size();j++){
+                  ID = projectExperimentEntries.get(i).getProject().get_id();
+                    if (ID == remoteExperiment_list.get(i).get_id())
+                    {
+                      projectExperimentEntries.get(j).getExperimentEntry().add(new ExperimentEntry(new Experiment(remoteExperiment_list.get(i)),entries));
+                      break;
+                    }
+                }
+            }
+
+
 
         } catch (SBSBaseException e) {
             e.printStackTrace();

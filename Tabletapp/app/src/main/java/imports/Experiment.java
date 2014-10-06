@@ -11,7 +11,8 @@ public class Experiment extends RemoteExperiment {
 
     public Experiment(RemoteExperiment a){
         super(a);
-    };
+    }
+
 
     public void set_id(Integer new_id){
         this.id = new_id;
