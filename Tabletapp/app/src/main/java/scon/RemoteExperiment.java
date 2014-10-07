@@ -19,6 +19,10 @@ public class RemoteExperiment implements Comparable<RemoteExperiment> {
         this.name = a.name;
         this.description = a.description;
     };
+    public RemoteExperiment(){
+
+
+    }
 
 
 

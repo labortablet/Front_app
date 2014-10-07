@@ -17,6 +17,10 @@ public class RemoteProject implements Comparable<RemoteProject>{
         this.description = a.description;
     };
 
+    public RemoteProject() {
+
+    }
+
 
     @Override
     public int compareTo(RemoteProject other) {

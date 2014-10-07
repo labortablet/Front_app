@@ -47,6 +47,8 @@ public class Start extends Activity {
 
     private Matcher matcher;
     private Pattern pattern;
+    boolean mServiceConnected = false;
+    private LocalService mLocnServ;
     private static String[][] project = new String[10][20];
 
     boolean mIsBound;
@@ -86,8 +88,9 @@ public class Start extends Activity {
         //doBindService();
         ActivityRegistry.register(this);
 
-     //   Intent wtdservice = new Intent(this, LocalService.class);
-      //  startService(wtdservice);
+
+      // Intent wtdservice = new Intent(this, LocalService.class);
+      // startService(wtdservice);
 
 
     } // Standart Android Methoden für apps
@@ -136,18 +139,20 @@ public class Start extends Activity {
                     password = text3.getText().toString();
 
                     int i = 0;
+
+
 // TODO: ADD password hash funktion
 
                    user = new User(email, password);
 
 try {
-    mService.connect("https://lablet.vega.uberspace.de/scon/db.cgi", user);
+  //  mService.connect("https://lablet.vega.uberspace.de/scon/db.cgi", user);
 }
 catch (Exception E){
 
 
 }
-                    i = Connect.login_server(Server, email, password);
+                  //  i = Connect.login_server(Server, email, password);
 
 
                     switch (i) {
@@ -207,8 +212,62 @@ catch (Exception E){
         }
     }
 
-    /** Defines callbacks for service binding, passed to bindService()*/
+
     private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            LocalService.LocalBinder binder = (LocalService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+
+
+
+/*
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Unbind from the service
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+    }
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /** Defines callbacks for service binding, passed to bindService()*/
+   /* private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,
@@ -225,7 +284,7 @@ catch (Exception E){
         public void onServiceDisconnected(ComponentName arg0) {
             mBound = false;
         }
-    };
+    };*/
 
 
 

@@ -4,17 +4,16 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.LinkedList;
+import java.util.Random;
 
 import exceptions.SBSBaseException;
+import imports.AttachmentText;
+import imports.RemoteEntry;
 import imports.User;
 import scon.RemoteExperiment;
 import scon.RemoteProject;
-import scon.ServerDatabaseSession;
 
 
 /**
@@ -24,40 +23,56 @@ public class LocalService extends Service {
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
     // Random number generator
-    ServerDatabaseSession SDS ;
+    private final Random mGenerator = new Random();
 
     /**
      * Class used for the client Binder.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with IPC.
      */
-
-
-
-
-    // connection method for Service and Server
-    public void connect (String url, User user) throws MalformedURLException {
-     SDS = new ServerDatabaseSession(new URL(url), user.getUser_email(), user.getPw_hash());
-        Log.d("work","connection established");
-    }
-
-    public LinkedList getProjects() throws SBSBaseException {
-       LinkedList<RemoteProject> remoteProject_list = SDS.get_projects();
-        return remoteProject_list;
-    }
-
-    public LinkedList getExperiments() throws SBSBaseException {
-        LinkedList<RemoteExperiment> remoteExperiments_list = SDS.get_experiments();
-        return remoteExperiments_list;
-    }
-
-
-
-
     public class LocalBinder extends Binder {
         LocalService getService() {
             // Return this instance of LocalService so clients can call public methods
             return LocalService.this;
         }
+    }
+
+
+    public LinkedList getProjects() throws SBSBaseException {
+
+        LinkedList<RemoteProject> remoteProject_list = new LinkedList<RemoteProject>();// = SDS.get_projects();
+
+        remoteProject_list.add(0,new RemoteProject(1,"project 1" ,"Das ist Project 1"));
+        remoteProject_list.add(1,new RemoteProject(2,"project 2" ,"Das ist Project 2"));
+        remoteProject_list.add(2,new RemoteProject(3,"project 3" ,"Das ist Project 3"));
+
+        return remoteProject_list;
+    }
+    public LinkedList getExperiments() throws SBSBaseException {
+        LinkedList<RemoteExperiment> remoteExperiments_list = new LinkedList<RemoteExperiment>(); // SDS.get_experiments();
+
+        remoteExperiments_list.add(0,new RemoteExperiment(1, 1, "Experiment 1", "Inhalt 1"));
+        remoteExperiments_list.add(1,new RemoteExperiment(1, 2, "Experiment 2", "Inhalt 2"));
+        remoteExperiments_list.add(2,new RemoteExperiment(2, 1, "Experiment 3", "Inhalt 3"));
+        remoteExperiments_list.add(3,new RemoteExperiment(2, 2, "Experiment 4", "Inhalt 4"));
+        remoteExperiments_list.add(4,new RemoteExperiment(3, 1, "Experiment 5", "Inhalt 5"));
+        remoteExperiments_list.add(5,new RemoteExperiment(3, 2, "Experiment 6", "Inhalt 6"));
+
+
+
+        return remoteExperiments_list;
+    }
+    public LinkedList getEntries() throws SBSBaseException {
+        //TODO : add entry call function here!
+        LinkedList<RemoteEntry> remoteEntries_list = new LinkedList<RemoteEntry>();
+
+        remoteEntries_list.add(0,new RemoteEntry(1,new AttachmentText("test1") ,1,"",1,"", "",new User("","","","")));
+        remoteEntries_list.add(1,new RemoteEntry(1,new AttachmentText("test2") ,1,"",2,"", "",new User("","","","")));
+        remoteEntries_list.add(2,new RemoteEntry(2,new AttachmentText("test3") ,1,"",1,"", "",new User("","","","")));
+        remoteEntries_list.add(3,new RemoteEntry(2,new AttachmentText("test4") ,1,"",2,"", "",new User("","","","")));
+        remoteEntries_list.add(4,new RemoteEntry(3,new AttachmentText("test5") ,1,"",1,"", "",new User("","","","")));
+        remoteEntries_list.add(5,new RemoteEntry(3,new AttachmentText("test6") ,1,"",2,"", "",new User("","","","")));
+
+        return remoteEntries_list;
     }
 
     @Override
@@ -66,10 +81,37 @@ public class LocalService extends Service {
     }
 
     /** method for clients */
+    public int getRandomNumber() {
+        return mGenerator.nextInt(100);
+    }
+
+}
+
+/*
+    @Override
+    public IBinder onBind(Intent intent) {
+        Log.d("SVTEST", "Loc service ONBIND");
+        return mBinder;
+    }
 
 
-
-
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.d("SVTEST", "Loc service ONUNBIND");
+        return super.onUnbind(intent);
+    }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // Won't run unless it's EXPLICITLY STARTED
+        Log.d("SVTEST", "Loc service ONSTARTCOMMAND");
+        return super.onStartCommand(intent, flags, startId);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("SVTEST", "Loc service ONDESTROY");
+    }
+/*
 
     /** method for clients */
 
@@ -151,4 +193,3 @@ public class LocalService extends Service {
     }
 
     */
-}

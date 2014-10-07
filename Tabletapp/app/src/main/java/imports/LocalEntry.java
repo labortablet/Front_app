@@ -7,7 +7,7 @@ package imports;
 * */
 
 
-public class LocalEntry extends BaseEntry implements Comparable<LocalEntry> {
+public class LocalEntry extends RemoteEntry implements Comparable<LocalEntry> {
     /**
      *This is the Local ID an LocalEntry can gets From the tab.
      * @value
@@ -46,6 +46,10 @@ public class LocalEntry extends BaseEntry implements Comparable<LocalEntry> {
         this.entry_time = entry_time;
         this.user = user;
         this.sync = sync;
+    }
+
+    public LocalEntry(RemoteEntry a) {
+        super(a);
     }
 
     /**

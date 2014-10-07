@@ -20,6 +20,7 @@ import exceptions.SBSBaseException;
 import imports.Experiment;
 import imports.LocalEntry;
 import imports.Project;
+import imports.RemoteEntry;
 import imports.User;
 import scon.RemoteExperiment;
 import scon.RemoteProject;
@@ -62,26 +63,50 @@ public class Project_show extends Activity {
         public void onCreate(Bundle savedInstanceState) {
 
         try {
+            @SuppressWarnings("unchecked")
             LinkedList<RemoteProject> remoteProject_list = Start.mService.getProjects();
+            @SuppressWarnings("unchecked")
             LinkedList<RemoteExperiment> remoteExperiment_list = Start.mService.getExperiments();
+            @SuppressWarnings("unchecked")
+            LinkedList<RemoteEntry> remoteEntry_list = Start.mService.getEntries();
+            ArrayList<LocalEntry> entries ;
+
+
 
             projectExperimentEntries = new ArrayList<ProjectExperimentEntry>();
-            ArrayList<LocalEntry> entries = new ArrayList<LocalEntry>();
-            experimentEntries = new ArrayList<ExperimentEntry>();
 
-            for (RemoteProject aRemoteProject_list : remoteProject_list) {
 
-                projectExperimentEntries.add(new ProjectExperimentEntry(new Project(aRemoteProject_list), experimentEntries));
+           for(int i = 0; i < remoteProject_list.size();i++){
+                experimentEntries = new ArrayList<ExperimentEntry>();
+                projectExperimentEntries.add(new ProjectExperimentEntry(new Project(remoteProject_list.get(i)),experimentEntries));
+            }
+            for(int i = 0 ;i < remoteExperiment_list.size();i++) {
+
+               for(int j = 0 ; j< remoteProject_list.size();j++){
+
+                    if (projectExperimentEntries.get(j).getProject().get_id().equals(remoteExperiment_list.get(i).get_project_id()))
+                    {
+                      entries = new ArrayList<LocalEntry>();
+                      projectExperimentEntries.get(j).getExperimentEntry().add(new ExperimentEntry(new Experiment(remoteExperiment_list.get(i)), entries));
+                      break;
+                    }
+                }
             }
 
-            for(int i = 0 ;i < remoteExperiment_list.size();i++) {
-                int ID = 0 ;
-               for(int j = 0 ; j< remoteProject_list.size();j++){
-                  ID = projectExperimentEntries.get(i).getProject().get_id();
-                    if (ID == remoteExperiment_list.get(i).get_id())
-                    {
-                      projectExperimentEntries.get(j).getExperimentEntry().add(new ExperimentEntry(new Experiment(remoteExperiment_list.get(i)),entries));
-                      break;
+            for(int i = 0 ; i<remoteEntry_list.size(); i++)
+            {
+                    int ID = 0;
+                     for(int j = 0 ; j< remoteProject_list.size();j++) {
+                      ID = projectExperimentEntries.get(j).getProject().get_id();
+                       int ID2 = 0;
+                        if(ID == remoteEntry_list.get(i).getProject_id()) {
+                         for (int k = 0; k < remoteExperiment_list.size(); k++) {
+                          ID2 = projectExperimentEntries.get(j).getExperimentEntry().get(k).getExperiments().get_id();
+                           if (ID2 == remoteEntry_list.get(i).getExperiment_id()){
+                            projectExperimentEntries.get(j).getExperimentEntry().get(k).getEntriesList().add(new LocalEntry(remoteEntry_list.get(i)));
+                             break;
+                            }
+                        }
                     }
                 }
             }
@@ -90,12 +115,15 @@ public class Project_show extends Activity {
 
         } catch (SBSBaseException e) {
             e.printStackTrace();
+        }catch (NullPointerException Ignored) {
+
         }
+
         user = Start.getUser();
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.project_show);
         ActivityRegistry.register(this);
+        /*
         RemoteExperiment remote;
         List<LocalEntry> entries;
         List<LocalEntry> entries1;
@@ -133,7 +161,7 @@ public class Project_show extends Activity {
         projectExperimentEntries.add(new ProjectExperimentEntry(new Project(rempro),experimentEntries1));
 
 
-
+*/
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
         // preparing list data

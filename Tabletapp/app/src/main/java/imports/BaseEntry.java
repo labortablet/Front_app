@@ -16,6 +16,19 @@ public class BaseEntry {
      * @value
      * @since 1.0
      */
+
+    Integer Project_id;
+    /**
+     *This is the title of an LocalEntry
+     * @value
+     * @since 1.0
+     */
+    Integer Experiment_id;
+    /**
+     *This is the title of an LocalEntry
+     * @value
+     * @since 1.0
+     */
     String title;
     /**
      *This is the Attachment Object Where every entry hold its content.
@@ -48,6 +61,14 @@ public class BaseEntry {
      */
     User user;
 
+
+    public Integer getProject_id() {
+        return Project_id;
+    }
+
+    public Integer getExperiment_id() {
+        return Experiment_id;
+    }
 
     public Integer getRemote_id() {
         return remote_id;

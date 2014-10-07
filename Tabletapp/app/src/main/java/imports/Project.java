@@ -17,6 +17,10 @@ public class Project extends RemoteProject {
         this.experiments = new Hashtable();
     }
 
+    public Project() {
+        super();
+    }
+
     public void set_name(String new_name) {
         this.name = new_name;
     }
