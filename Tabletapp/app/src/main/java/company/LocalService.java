@@ -1,7 +1,10 @@
 package company;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.IBinder;
 
@@ -46,14 +49,22 @@ public class LocalService extends Service {
            return 1;
        }
       SDS = new ServerDatabaseSession(url, user.getUser_email(), user.getPw_hash());
+
+     if(isNetworkAvailable()){
+
+         if(isOnline()){
    /*    try {
    //TODO: add chalange function
            challange = SDS.get_challenge();
        } catch (SBSBaseException e) {
            e.printStackTrace();
            return 2;
-       }*/
-       return 0;
+           */
+             return 0;
+       }else return 2;}else return 2;
+
+
+    // }else return 2;
    }
 // Method to get all active Projects From the user
     public LinkedList getProjects() throws SBSBaseException {
@@ -106,9 +117,31 @@ public class LocalService extends Service {
     }
 
     /** method for clients */
+    public Boolean isOnline() {
+        try {
+            Process p1 = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.com");
+            int returnVal = p1.waitFor();
+            boolean reachable = (returnVal==0);
+            return reachable;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+
+
+
+
+    private Boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();}
 
 }
+
 
 /*
     @Override
