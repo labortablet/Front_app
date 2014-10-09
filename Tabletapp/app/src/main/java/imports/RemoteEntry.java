@@ -34,5 +34,9 @@ public class RemoteEntry extends BaseEntry {
 
 
     }
-    public RemoteEntry(){}
+    public RemoteEntry(){
+
+
+
+    }
 }

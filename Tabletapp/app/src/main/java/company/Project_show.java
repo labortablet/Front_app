@@ -55,9 +55,6 @@ public class Project_show extends Activity {
         return projectExperimentEntries;
     }
 
-
-
-
     @Override
 
         public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +100,7 @@ public class Project_show extends Activity {
                          for (int k = 0; k < remoteExperiment_list.size(); k++) {
                           ID2 = projectExperimentEntries.get(j).getExperimentEntry().get(k).getExperiments().get_id();
                            if (ID2 == remoteEntry_list.get(i).getExperiment_id()){
-                            projectExperimentEntries.get(j).getExperimentEntry().get(k).getEntriesList().add(new LocalEntry(remoteEntry_list.get(i)));
+                            projectExperimentEntries.get(j).getExperimentEntry().get(k).getEntriesList().add(new LocalEntry(remoteEntry_list.get(i),true));
                              break;
                             }
                         }
@@ -113,9 +110,9 @@ public class Project_show extends Activity {
 
 
 
-        } catch (SBSBaseException e) {
+        }catch (SBSBaseException e) {
             e.printStackTrace();
-        }catch (NullPointerException Ignored) {
+        }catch (NullPointerException ignored) {
 
         }
 
@@ -257,10 +254,7 @@ public class Project_show extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     public void buttonEventHandler(View v) {  // butten events

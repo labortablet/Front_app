@@ -48,10 +48,14 @@ public class LocalEntry extends RemoteEntry implements Comparable<LocalEntry> {
         this.sync = sync;
     }
 
+    public LocalEntry(RemoteEntry a,boolean sync) {
+        super(a);
+    this.sync = sync;
+    }
     public LocalEntry(RemoteEntry a) {
         super(a);
-    }
 
+    }
     /**
      * Konstruktor For the Keyboard_entry
      *@param title Title of the LocalEntry

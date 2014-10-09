@@ -310,7 +310,7 @@ public class ServerDatabaseSession {
           //  entry_ids[i] = Integer(entry_id_list[i]);
         }
         return entry_ids;
-    };
+    }
 
 
 

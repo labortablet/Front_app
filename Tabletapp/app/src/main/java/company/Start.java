@@ -14,6 +14,9 @@ import android.widget.EditText;
 
 import com.example.test1.tabletapp.app.R;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -137,22 +140,9 @@ public class Start extends Activity {
                     Server = text.getText().toString();
                     email = text2.getText().toString();
                     password = text3.getText().toString();
-
                     int i = 0;
-
-
-// TODO: ADD password hash funktion
-
-                   user = new User(email, password);
-
-try {
-  //  mService.connect("https://lablet.vega.uberspace.de/scon/db.cgi", user);
-}
-catch (Exception E){
-
-
-}
-                  //  i = Connect.login_server(Server, email, password);
+                   user = new User(email, sha265(password));
+                    i = mService.connect(Server,user);
 
 
                     switch (i) {
@@ -160,11 +150,15 @@ catch (Exception E){
                             start_NewActivity();
                             break;
                         case 1:
-
+                            Popup popup = new Popup();            // Popup für email
+                            popup.set_String(R.string.MalformedURLException);
+                            popup.show(getFragmentManager(), "this");
                             break;
 
                         case 2:
-
+                            Popup popup2 = new Popup();            // Popup für email
+                            popup2.set_String(R.string.SBSBaseException);
+                            popup2.show(getFragmentManager(), "this");
                             break;
 
                     }
@@ -181,8 +175,10 @@ catch (Exception E){
                 popup.set_String(R.string.popup);     // Popup für leere felder
                 popup.show(getFragmentManager(), "this");
             }
-        } catch (NullPointerException e) {
-            //Nullpointer exeption
+        } catch (NullPointerException Ignored) {
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
                 break;
 
@@ -229,6 +225,29 @@ catch (Exception E){
             mBound = false;
         }
     };
+
+
+
+    private String sha265(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(password.getBytes());
+
+        //convert the byte to hex format method
+
+    /*    StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < byteData.length; i++) {
+            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+    */
+
+
+
+        byte[] byteData;
+        byteData = md.digest();
+
+        return Arrays.toString(byteData);
+
+    }
 
 
 

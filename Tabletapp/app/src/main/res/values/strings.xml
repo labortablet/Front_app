@@ -23,6 +23,8 @@
     <string name="last_entries">Last Entries</string>
     <string name="popup">You must fill in all fields, as otherwise we cannot process your login</string>
     <string name="ok">OK</string>
+    <string name="MalformedURLException">MalformedURLException</string>
+    <string name="SBSBaseException">SBSBaseException</string>
     <string name="experiment_name">Experiment name:</string>
     <string name="experiment_description">Experiment Description:</string>
     <string name="project_name">Project name:</string>
