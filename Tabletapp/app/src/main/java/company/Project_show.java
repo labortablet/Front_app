@@ -20,7 +20,7 @@ import exceptions.SBSBaseException;
 import imports.Experiment;
 import imports.LocalEntry;
 import imports.Project;
-import imports.RemoteEntry;
+import scon.RemoteEntry;
 import imports.User;
 import scon.RemoteExperiment;
 import scon.RemoteProject;
@@ -77,6 +77,7 @@ public class Project_show extends Activity {
                 experimentEntries = new ArrayList<ExperimentEntry>();
                 projectExperimentEntries.add(new ProjectExperimentEntry(new Project(remoteProject_list.get(i)),experimentEntries));
             }
+
             for(int i = 0 ;i < remoteExperiment_list.size();i++) {
 
                for(int j = 0 ; j< remoteProject_list.size();j++){
@@ -91,22 +92,21 @@ public class Project_show extends Activity {
             }
 
             for(int i = 0 ; i<remoteEntry_list.size(); i++)
-            {
-                    int ID = 0;
-                     for(int j = 0 ; j< remoteProject_list.size();j++) {
-                      ID = projectExperimentEntries.get(j).getProject().get_id();
-                       int ID2 = 0;
-                        if(ID == remoteEntry_list.get(i).getProject_id()) {
-                         for (int k = 0; k < remoteExperiment_list.size(); k++) {
-                          ID2 = projectExperimentEntries.get(j).getExperimentEntry().get(k).getExperiments().get_id();
-                           if (ID2 == remoteEntry_list.get(i).getExperiment_id()){
-                            projectExperimentEntries.get(j).getExperimentEntry().get(k).getEntriesList().add(new LocalEntry(remoteEntry_list.get(i),true));
-                             break;
-                            }
-                        }
+            {        int ID = 0;
+                     for(int j = 0 ; j< projectExperimentEntries.size();j++) {
+                         for(int k = 0;k< projectExperimentEntries.get(j).getExperimentEntry().size();k++)
+                         {
+                      if(projectExperimentEntries.get(j).getExperimentEntry().get(k).getExperiments().get_id().equals(remoteEntry_list.get(i).getExperiment_id()))
+                      {
+                          projectExperimentEntries.get(j).getExperimentEntry().get(k).getEntriesList().add(new LocalEntry(remoteEntry_list.get(i)));
+
+                          break;
+
+                      }
+                         }
                     }
                 }
-            }
+
 
 
 

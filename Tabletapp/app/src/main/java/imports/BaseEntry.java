@@ -10,61 +10,53 @@ public class BaseEntry {
      * @value
      * @since 1.0
      */
-    Integer remote_id;
-    /**
-     *This is the title of an LocalEntry
-     * @value
-     * @since 1.0
-     */
+    protected Integer remote_id;
 
-    Integer Project_id;
     /**
      *This is the title of an LocalEntry
      * @value
      * @since 1.0
      */
-    Integer Experiment_id;
+    protected Integer Experiment_id;
     /**
      *This is the title of an LocalEntry
      * @value
      * @since 1.0
      */
-    String title;
+    protected String title;
     /**
      *This is the Attachment Object Where every entry hold its content.
      * @value
      * @since 1.0
      */
-     Object attachment; //no access yet
+    protected Object attachment; //no access yet
     /**
      *This is the Attachment Typ every LocalEntry got.
      * @value
      * @since 1.0
      */
-   int attachment_type = 0; //no access yet
+    protected int attachment_type = 0; //no access yet
     /**
      *This is the sync_time a entry only got if it's synced with the Server, this means that it is the time when the server received the LocalEntry.
      * @value
      * @since 1.0
      */
-    String sync_time;
+    protected String sync_time;
     /**
      *This is the entry_time it holds the time, the LocalEntry was finished in the app.
      * @value
      * @since 1.0
      */
-     String entry_time;
+    protected String entry_time;
     /**
      *This Value holds the UserObject.
      * @value
      * @since 1.0
      */
-    User user;
+    protected User user;
 
 
-    public Integer getProject_id() {
-        return Project_id;
-    }
+
 
     public Integer getExperiment_id() {
         return Experiment_id;
