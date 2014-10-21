@@ -5,6 +5,7 @@ public class User {
     private String firstname;
     private String user_email;
     private String pw_hash;
+    private static Boolean lastname_first = false;
 
 
     public User(String firstname, String lastname, String user_email, String pw_hash){
@@ -18,7 +19,7 @@ public class User {
         this.user_email = user_email;
     }
 
-    public String display(Boolean lastname_first, String separator){
+    public String display(String separator){
         if(this.lastname != null && this.firstname != null){
             if(lastname_first){
                 return this.lastname + separator + this.firstname;
@@ -30,9 +31,7 @@ public class User {
         }
     }
 
-    public String display(){
-        return this.display(Boolean.FALSE, " ");
-    }
+
 
     public void setName(String firstname, String lastname){
         this.firstname = firstname;

@@ -13,6 +13,7 @@ import android.widget.TableRow.LayoutParams;
 
 import com.example.test1.tabletapp.app.R;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -77,7 +78,7 @@ public class Table_entry extends Activity {
                 String title1 = text.getText().toString();
 
 
-                projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(new LocalEntry(title1,getCurrentTimeStamp(),Start.getUser(),string_array,false));
+                projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(new LocalEntry(title1,new Timestamp(System.currentTimeMillis()),Start.getUser(),string_array,false));
                 Project_show.setProjectExperimentEntries(projectExperimentEntries);
                 this.finish();
 

@@ -1,5 +1,7 @@
 package imports;
 
+import java.sql.Timestamp;
+
 /**
  * Created by Grit on 07.09.2014.
  */
@@ -41,13 +43,33 @@ public class BaseEntry {
      * @value
      * @since 1.0
      */
-    protected String sync_time;
+    protected Timestamp sync_time;
     /**
      *This is the entry_time it holds the time, the LocalEntry was finished in the app.
      * @value
      * @since 1.0
      */
-    protected String entry_time;
+    protected Timestamp entry_time;
+
+    public Timestamp getChange_time() {
+        return change_time;
+    }
+
+    public Timestamp getSync_time() {
+        return sync_time;
+    }
+
+    public Timestamp getEntry_time() {
+        return entry_time;
+    }
+
+    /**
+     *This Value holds the UserObject.
+     * @value
+     * @since 1.0
+     */
+
+    protected Timestamp change_time;
     /**
      *This Value holds the UserObject.
      * @value
@@ -78,13 +100,9 @@ public class BaseEntry {
         return attachment_type;
     }
 
-    public String getSync_time() {
-        return sync_time;
-    }
 
-    public String getEntry_time() {
-        return entry_time;
-    }
+
+
 
     public User getUser() {
         return user;

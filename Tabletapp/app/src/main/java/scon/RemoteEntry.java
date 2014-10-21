@@ -1,5 +1,9 @@
 package scon;
 
+
+
+import java.sql.Timestamp;
+
 import imports.BaseEntry;
 import imports.User;
 
@@ -18,8 +22,9 @@ public class RemoteEntry extends BaseEntry {
        this.sync_time = a.sync_time;
        this.title = a.title;
        this.user = a.user;
+       this.change_time=a.change_time;
     }
-    public RemoteEntry(Object attachment,int attachment_type,String entry_time,int Experiment_id,String sync_time, String title, User user)
+    public RemoteEntry(Object attachment,int attachment_type,Timestamp entry_time,int Experiment_id,Timestamp sync_time,Timestamp change_time, String title, User user)
     {
 
 
@@ -30,6 +35,7 @@ public class RemoteEntry extends BaseEntry {
         this.sync_time = sync_time;
         this.title = title;
         this.user = user;
+        this.change_time = change_time;
 
 
 

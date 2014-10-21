@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.example.test1.tabletapp.app.R;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import imports.LocalEntry;
@@ -56,7 +57,7 @@ public class Keyboard_entry extends Activity {
                             String title1 = title.getText().toString();
                             experiment_Selected = Project_show.getExperiment_Selected();
 
-                            LocalEntry edit = new LocalEntry(title1, attachment, Lablet_Functions.getCurrentTimeStamp(), Start.getUser(),false);
+                            LocalEntry edit = new LocalEntry(title1, attachment,new Timestamp(System.currentTimeMillis()), Start.getUser(),false);
                             projectExperimentEntries.get(project_Selected).getExperimentEntry().get(experiment_Selected).getEntriesList().add(edit);
 
                             Project_show.setProjectExperimentEntries(projectExperimentEntries);

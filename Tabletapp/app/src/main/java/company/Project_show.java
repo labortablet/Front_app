@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.example.test1.tabletapp.app.R;
 
@@ -58,7 +59,8 @@ public class Project_show extends Activity {
     @Override
 
         public void onCreate(Bundle savedInstanceState) {
-
+        Boolean test = Start.mService.Create_DB();
+        Toast.makeText(this,test.toString(),Toast.LENGTH_SHORT).show();
         try {
             @SuppressWarnings("unchecked")
             LinkedList<RemoteProject> remoteProject_list = Start.mService.getProjects();

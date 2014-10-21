@@ -3,6 +3,7 @@ package company;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
@@ -10,15 +11,16 @@ import android.os.IBinder;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 
+import database.DatabaseHandler;
 import exceptions.SBSBaseException;
 import imports.AttachmentText;
-
 import imports.User;
+import scon.RemoteEntry;
 import scon.RemoteExperiment;
 import scon.RemoteProject;
-import scon.RemoteEntry;
 import scon.ServerDatabaseSession;
 
 
@@ -31,8 +33,8 @@ public class LocalService extends Service {
     private User user;
     private ServerDatabaseSession SDS;
     private  byte[] challange;
-
-
+    private DatabaseHandler DB_Handler;
+    SQLiteDatabase myDB = null;
     public class LocalBinder extends Binder {
         LocalService getService() {
             // Return this instance of LocalService so clients can call public methods
@@ -40,8 +42,28 @@ public class LocalService extends Service {
         }
     }
 
+    public boolean Create_DB(){
+        DB_Handler = new DatabaseHandler(this);
+        try {
+            myDB = this.openOrCreateDatabase("Lablet.db", MODE_PRIVATE, null);
+            return true;
+   /* Create a Table in the Database. */
+
+
+   /* Insert data to a Table*/
+
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
     // connection method For connecting with server
    public int connect(String adress,User user){
+       this.user = user;
+       this.user.setName("Hans","dieter");
+       SQLiteDatabase mydatabase = openOrCreateDatabase("Test",MODE_PRIVATE,null);
        URL url = null;
        try {
          url = new URL(adress);
@@ -95,12 +117,12 @@ public class LocalService extends Service {
         //TODO : add entry call function here!
         LinkedList<RemoteEntry> remoteEntries_list = new LinkedList<RemoteEntry>();
 
-        remoteEntries_list.add(0,new RemoteEntry(new AttachmentText("test1") ,1,"",1,"", "test1",new User("","","","")));
-        remoteEntries_list.add(1,new RemoteEntry(new AttachmentText("test2") ,1,"",2,"", "test2",new User("","","","")));
-        remoteEntries_list.add(2,new RemoteEntry(new AttachmentText("test3") ,1,"",3,"", "test3",new User("","","","")));
-        remoteEntries_list.add(3,new RemoteEntry(new AttachmentText("test4") ,1,"",4,"", "test4",new User("","","","")));
-        remoteEntries_list.add(4,new RemoteEntry(new AttachmentText("test5") ,1,"",5,"", "test5",new User("","","","")));
-        remoteEntries_list.add(5,new RemoteEntry(new AttachmentText("test6") ,1,"",5,"", "test6",new User("","","","")));
+        remoteEntries_list.add(0,new RemoteEntry(new AttachmentText("test1") ,1,new Timestamp(System.currentTimeMillis()),1,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()), "test1",user));
+        remoteEntries_list.add(1,new RemoteEntry(new AttachmentText("test2") ,1,new Timestamp(System.currentTimeMillis()),2,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()), "test2",user));
+        remoteEntries_list.add(2,new RemoteEntry(new AttachmentText("test3") ,1,new Timestamp(System.currentTimeMillis()),3,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()), "test3",user));
+        remoteEntries_list.add(3,new RemoteEntry(new AttachmentText("test4") ,1,new Timestamp(System.currentTimeMillis()),4,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()), "test4",user));
+        remoteEntries_list.add(4,new RemoteEntry(new AttachmentText("test5") ,1,new Timestamp(System.currentTimeMillis()),5,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()), "test5",user));
+        remoteEntries_list.add(5,new RemoteEntry(new AttachmentText("test6") ,1,new Timestamp(System.currentTimeMillis()),5,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()), "test6",user));
 
         return remoteEntries_list;
     }
