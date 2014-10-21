@@ -14,10 +14,11 @@ import java.util.LinkedList;
 
 import exceptions.SBSBaseException;
 import imports.AttachmentText;
-import imports.RemoteEntry;
+
 import imports.User;
 import scon.RemoteExperiment;
 import scon.RemoteProject;
+import scon.RemoteEntry;
 import scon.ServerDatabaseSession;
 
 
@@ -83,10 +84,10 @@ public class LocalService extends Service {
 
         remoteExperiments_list.add(0,new RemoteExperiment(1, 1, "Experiment 1", "Inhalt 1"));
         remoteExperiments_list.add(1,new RemoteExperiment(1, 2, "Experiment 2", "Inhalt 2"));
-        remoteExperiments_list.add(2,new RemoteExperiment(2, 1, "Experiment 3", "Inhalt 3"));
-        remoteExperiments_list.add(3,new RemoteExperiment(2, 2, "Experiment 4", "Inhalt 4"));
-        remoteExperiments_list.add(4,new RemoteExperiment(3, 1, "Experiment 5", "Inhalt 5"));
-        remoteExperiments_list.add(5,new RemoteExperiment(3, 2, "Experiment 6", "Inhalt 6"));
+        remoteExperiments_list.add(2,new RemoteExperiment(2, 3, "Experiment 3", "Inhalt 3"));
+        remoteExperiments_list.add(3,new RemoteExperiment(2, 4, "Experiment 4", "Inhalt 4"));
+        remoteExperiments_list.add(4,new RemoteExperiment(3, 5, "Experiment 5", "Inhalt 5"));
+        remoteExperiments_list.add(5,new RemoteExperiment(3, 6, "Experiment 6", "Inhalt 6"));
         return remoteExperiments_list;
     }
     // Method to get all active Entries From the user
@@ -94,12 +95,12 @@ public class LocalService extends Service {
         //TODO : add entry call function here!
         LinkedList<RemoteEntry> remoteEntries_list = new LinkedList<RemoteEntry>();
 
-        remoteEntries_list.add(0,new RemoteEntry(1,new AttachmentText("test1") ,1,"",1,"", "test1",new User("","","","")));
-        remoteEntries_list.add(1,new RemoteEntry(1,new AttachmentText("test2") ,1,"",2,"", "test2",new User("","","","")));
-        remoteEntries_list.add(2,new RemoteEntry(2,new AttachmentText("test3") ,1,"",1,"", "test3",new User("","","","")));
-        remoteEntries_list.add(3,new RemoteEntry(2,new AttachmentText("test4") ,1,"",2,"", "test4",new User("","","","")));
-        remoteEntries_list.add(4,new RemoteEntry(3,new AttachmentText("test5") ,1,"",1,"", "test5",new User("","","","")));
-        remoteEntries_list.add(5,new RemoteEntry(3,new AttachmentText("test6") ,1,"",2,"", "test6",new User("","","","")));
+        remoteEntries_list.add(0,new RemoteEntry(new AttachmentText("test1") ,1,"",1,"", "test1",new User("","","","")));
+        remoteEntries_list.add(1,new RemoteEntry(new AttachmentText("test2") ,1,"",2,"", "test2",new User("","","","")));
+        remoteEntries_list.add(2,new RemoteEntry(new AttachmentText("test3") ,1,"",3,"", "test3",new User("","","","")));
+        remoteEntries_list.add(3,new RemoteEntry(new AttachmentText("test4") ,1,"",4,"", "test4",new User("","","","")));
+        remoteEntries_list.add(4,new RemoteEntry(new AttachmentText("test5") ,1,"",5,"", "test5",new User("","","","")));
+        remoteEntries_list.add(5,new RemoteEntry(new AttachmentText("test6") ,1,"",5,"", "test6",new User("","","","")));
 
         return remoteEntries_list;
     }

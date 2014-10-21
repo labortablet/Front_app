@@ -7,6 +7,8 @@ package imports;
 * */
 
 
+import scon.RemoteEntry;
+
 public class LocalEntry extends RemoteEntry implements Comparable<LocalEntry> {
     /**
      *This is the Local ID an LocalEntry can gets From the tab.
@@ -92,7 +94,6 @@ public class LocalEntry extends RemoteEntry implements Comparable<LocalEntry> {
     /**
      * Konstruktor For the Table_entry
      * @param rem_id   The Remote ID
-
      * @param title Title of the LocalEntry
      *@param sync_time Sync time of the LocalEntry
      *@param entry_time Time when the entry was created
