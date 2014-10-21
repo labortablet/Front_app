@@ -11,7 +11,12 @@ public class BaseEntry {
      * @since 1.0
      */
     protected Integer remote_id;
-
+    /**
+     *This is the title of an LocalEntry
+     * @value
+     * @since 1.0
+     */
+    protected Integer Project_id;
     /**
      *This is the title of an LocalEntry
      * @value
@@ -36,6 +41,7 @@ public class BaseEntry {
      * @since 1.0
      */
     protected int attachment_type = 0; //no access yet
+    //FIXME these might need to be changed to Integer or Timestamp
     /**
      *This is the sync_time a entry only got if it's synced with the Server, this means that it is the time when the server received the LocalEntry.
      * @value
@@ -49,6 +55,12 @@ public class BaseEntry {
      */
     protected String entry_time;
     /**
+     *This is the entry_time it holds the time, the LocalEntry was finished in the app.
+     * @value
+     * @since 1.0
+     */
+    protected String change_time;
+    /**
      *This Value holds the UserObject.
      * @value
      * @since 1.0
@@ -56,37 +68,40 @@ public class BaseEntry {
     protected User user;
 
 
-
-
     public Integer getExperiment_id() {
-        return Experiment_id;
+        return this.Experiment_id;
     }
 
     public Integer getRemote_id() {
-        return remote_id;
+        return this.remote_id;
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public Object getAttachment() {
-        return attachment;
+        return this.attachment;
     }
 
     public int getAttachment_type() {
-        return attachment_type;
+        return this.attachment_type;
     }
 
     public String getSync_time() {
-        return sync_time;
+        return this.sync_time;
     }
 
     public String getEntry_time() {
-        return entry_time;
+        return this.entry_time;
+    }
+
+    public String getChange_time() {
+        return this.change_time;
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
+
 }

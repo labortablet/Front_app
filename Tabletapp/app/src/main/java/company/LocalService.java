@@ -14,7 +14,6 @@ import java.util.LinkedList;
 
 import exceptions.SBSBaseException;
 import imports.AttachmentText;
-
 import imports.User;
 import scon.RemoteExperiment;
 import scon.RemoteProject;
@@ -130,7 +129,6 @@ public class LocalService extends Service {
         }
         return false;
     }
-
 
 
 

@@ -1,10 +1,19 @@
 package scon;
 
-import android.util.Base64;
+//import org.json.JSONArray;
+//import org.json.JSONException;
+//import org.json.JSONObject;
+//import android.utils.Base64;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+//FIXME this is only needed as we are also debugging on pc
+//so I just added a copy of the android base64 file to our source for now
+//should be removed once we ship this.
+
+import org.json_pc.JSONArray;
+import org.json_pc.JSONException;
+import org.json_pc.JSONObject;
+import scon.Base64;
+import scon.BCrypt;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -19,11 +28,7 @@ import java.util.Scanner;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLHandshakeException;
 
-import exceptions.ErroneousResponse;
-import exceptions.NoServerConnectionException;
-import exceptions.NoValidSSLCert;
-import exceptions.SBSBaseException;
-import exceptions.ServerSideException;
+import exceptions.*;
 
 
 public class ServerDatabaseSession {
@@ -32,6 +37,7 @@ public class ServerDatabaseSession {
     private String username;
     private String password_hash;
     private URL database_url;
+    private byte[] salt;
 
 
     public ServerDatabaseSession(URL database_url, String username, String password_hash) {
@@ -39,47 +45,30 @@ public class ServerDatabaseSession {
         this.username = username;
         this.password_hash = password_hash;
         this.session_id_set = Boolean.FALSE;
+        this.salt = null;
     }
 
-    //De and Encode a Base64 Wrapped, ASCII Encoded String
-//they already arrive as a String because of the utf-8 transport
-//not working on a normal pc as we need the andoid stubs
-    private byte[] uni2bin(String uni) throws SBSBaseException {
-        //try {
-        //byte[] ascii_encoded_bytes = uni.getBytes("ASCII");
-        //return scon.Base64.decode(ascii_encoded_bytes);
+    private byte[] uni2bin(String uni) {
         return Base64.decode(uni, Base64.DEFAULT);
-        //} catch (UnsupportedEncodingException e) {
-        //	throw new SBSBaseException();
-        //} catch (IOException e) { //needed for Base64
-        //	throw new SBSBaseException();
-        //}
     }
 
-    private String bin2uni(byte[] bin) throws SBSBaseException {
-        //some changes are needed if I go back to the andoid version
-        //byte[] base64_encoded_bytes =  Base64.encode(bin, Base64.DEFAULT);
+    private String bin2uni(byte[] bin) {
         return Base64.encodeToString(bin, Base64.DEFAULT);
-        //FIXME API needs to be changed to 8
-        //byte[] base64_encoded_bytes = scon.Base64.encodeBytesToBytes(bin);
-        //try {
-        //	return new String(base64_encoded_bytes, "ascii");
-        //} catch (UnsupportedEncodingException e) {
-        //	throw new SBSBaseException();
-        //}
     }
 
     private JSONObject send_json(JSONObject message) throws SBSBaseException {
         return this.send_json(message, 10000, 15000);
     }
 
-
-
     private JSONObject send_json(JSONObject message, Integer ReadTimeout, Integer ConnectTimeout) throws SBSBaseException {
         //transform JSONObject to a byte string
         byte[] message_bytes = null;
         try {
             message_bytes = message.toString().getBytes("UTF-8");
+            System.out.println("Bytes prepared");
+            System.out.println(message);
+            System.out.println(message.toString());
+            System.out.println(message_bytes);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("UTF-8 encoding not available, this should really not happen");
         }
@@ -117,6 +106,8 @@ public class ServerDatabaseSession {
 
 
         try {
+            System.out.println("Got response");
+            System.out.println(response_string);
             return new JSONObject(response_string);
         } catch (JSONException e) {
             System.out.println(response_string);
@@ -125,53 +116,53 @@ public class ServerDatabaseSession {
         }
     }
 
-    private byte[] calculate_response(byte[] salt, byte[] challenge)
+    private byte[] calculate_response(byte[] challenge)
     {
-        return "a".getBytes(Charset.forName("UTF-8"));
+        String salted_pw = BCrypt.hashpw(this.password_hash, BCrypt.gensalt(10, this.salt));
+        return BCrypt.hashpw(salted_pw, BCrypt.gensalt(10, challenge)).getBytes();
     }
 
-    private void check_for_session() throws SBSBaseException {
+    private void check_for_session() throws NoSession {
         if (!this.session_id_set) {
             //we need a session id before we try to get projects
-            throw new SBSBaseException();
+            throw new NoSession();
         }
 
     }
-
-
 
     private void check_for_success(JSONObject result) throws SBSBaseException {
         //check if we succeeded
         try {
             if (!result.getString("status").toLowerCase().equals("success")) {
-                throw new SBSBaseException();
+                throw new NoSuccess();
             }
 
         } catch (JSONException e) {
-            throw new SBSBaseException();
+            throw new ErroneousResponse();
         }
     }
 
-
+    private JSONObject put_wrapper(JSONObject obj, String name, String value) {
+        try {
+            obj.put(name, value);
+        } catch (JSONException e) {
+            //should be impossible as we add a valid parameter to the json
+        }
+        return obj;
+    };
 
     private JSONObject send_action_after_auth_and_get_result(String action) throws SBSBaseException {
         this.check_for_session();
         JSONObject request = new JSONObject();
-        try {
-            request.put("action", action);
-            request.put("session_id", this.session_id);
-        } catch (JSONException e) {
-            //should be impossible as we add a valid parameter to the json
-            throw new SBSBaseException();
-        }
+        this.put_wrapper(request, "action", action);
+        this.put_wrapper(request, "session_id", this.session_id);
         JSONObject result = this.send_json(request);
         this.check_for_success(result);
         return result;
     }
 
-
-
-    public byte[] get_challenge() throws SBSBaseException {
+    private byte[] get_challenge() throws SBSBaseException {
+        System.out.println("Creating JSON Object for challenge");
         JSONObject request = new JSONObject();
         try {
             request.put("action", "get_challenge");
@@ -180,14 +171,24 @@ public class ServerDatabaseSession {
             //should be impossible as we add a valid parameter to the json
             throw new SBSBaseException();
         }
+        System.out.println("Object is ready and send");
         JSONObject result = null;
         result = this.send_json(request);
+        System.out.println("got result");
+        System.out.println(result);
         try {
             this.session_id = result.getString("session_id");
             this.session_id_set = Boolean.TRUE;
         }catch (JSONException e){
             throw new SBSBaseException();
         }
+        System.out.println("Got session_id");
+        try{
+            this.salt = this.uni2bin(result.getString("salt"));
+        }catch (JSONException e){
+            throw new SBSBaseException();
+        }
+        System.out.println("Got salt");
         try{
             return this.uni2bin(result.getString("challenge"));
         }catch (JSONException e){
@@ -195,7 +196,15 @@ public class ServerDatabaseSession {
         }
     }
 
-    public Boolean auth_session(byte[] response){return Boolean.TRUE;}
+    private Boolean auth_session(byte[] response){
+        //FIXME not implemented yet
+        return Boolean.TRUE;}
+
+    public void start_session() throws SBSBaseException {
+        byte[] challenge = this.get_challenge();
+        byte[] response = this.calculate_response(challenge);
+        this.auth_session(response);
+    };
 
     public LinkedList<RemoteProject> get_projects() throws SBSBaseException {
         this.check_for_session();
