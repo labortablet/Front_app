@@ -53,4 +53,8 @@ public class User {
     }
 
 
+    public String getUser_id(){
+        //Added this so we are not bound to use the email as an id
+        return this.user_email;
+    }
 }
