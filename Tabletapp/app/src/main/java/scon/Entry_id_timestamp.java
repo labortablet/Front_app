@@ -1,27 +1,27 @@
 package scon;
 
-import java.sql.Timestamp;
-
-import exceptions.ArraySizeMismatch;
+import java.util.Calendar;
 
 public class Entry_id_timestamp{
-    private Integer[] ids;
-    private Timestamp[] timestamps;
+    private Integer id;
+    private Calendar created;
+    private Calendar last_change;
 
-    public Entry_id_timestamp(Integer[] ids, Timestamp[] timestamps) throws ArraySizeMismatch {
-        if(!(ids.length == timestamps.length)){
-            throw new ArraySizeMismatch();
-        }
-        this.ids = ids;
-        this.timestamps = timestamps;
+    public Entry_id_timestamp(Integer id, Calendar created, Calendar last_change){
+        this.id = id;
+        this.created = created;
+        this.last_change = last_change;
     }
 
-    public Integer[] getIds(){
-        return this.ids;
+    public Integer getId(){
+        return this.id;
     }
 
-    public Timestamp[] getTimestamps(){
-        return this.timestamps;
+    public Calendar getCreated(){
+        return this.created;
     }
 
+    public Calendar getLast_change() {
+        return this.last_change;
+    }
 }
