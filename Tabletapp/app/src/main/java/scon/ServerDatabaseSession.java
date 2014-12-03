@@ -12,6 +12,9 @@ package scon;
 import org.json_pc.JSONArray;
 import org.json_pc.JSONException;
 import org.json_pc.JSONObject;
+
+import imports.AttachmentText;
+import imports.BaseEntry;
 import scon.Base64;
 
 import imports.User;
@@ -67,10 +70,6 @@ public class ServerDatabaseSession {
         byte[] message_bytes = null;
         try {
             message_bytes = message.toString().getBytes("UTF-8");
-            System.out.println("Bytes prepared");
-            System.out.println(message);
-            System.out.println(message.toString());
-            System.out.println(message_bytes);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("UTF-8 encoding not available, this should really not happen");
         }
@@ -97,19 +96,13 @@ public class ServerDatabaseSession {
         } catch (SSLHandshakeException e) {
             throw new NoValidSSLCert();
         } catch (IOException e) {
-            System.out.println(e);
             throw new NoServerConnectionException();
         }
-
         //maybe we should return a JSONObject with success:failed here and add the string as a parameter
         if (response_string.startsWith("<html>")) {
             throw new ServerSideException();
         }
-
-
         try {
-            System.out.println("Got response");
-            System.out.println(response_string);
             return new JSONObject(response_string);
         } catch (JSONException e) {
             System.out.println(response_string);
@@ -271,6 +264,8 @@ public class ServerDatabaseSession {
         try {
             experiment_json_array = result.getJSONArray("experiments");
         } catch (JSONException e) {
+            System.out.println(result);
+            System.out.println(e);
             throw new SBSBaseException();
         }
         LinkedList<RemoteExperiment> remoteExperiment_list = new LinkedList<RemoteExperiment>();
@@ -288,6 +283,7 @@ public class ServerDatabaseSession {
                 description = experiment_json.getString(3);
                 remoteExperiment_list.add(new RemoteExperiment(project_id, id, name, description));
             } catch (JSONException e) {
+                System.out.println(e);
                 //some project did not decode correctly
                 throw new SBSBaseException();
             }
@@ -296,7 +292,7 @@ public class ServerDatabaseSession {
         return remoteExperiment_list;
     }
 
-    public Entry_id_timestamp[] get_last_entry_references(Integer session_id, Integer experiment_id, Integer entry_count) throws SBSBaseException {
+    public LinkedList<Entry_id_timestamp> get_last_entry_references(Integer session_id, Integer experiment_id, Integer entry_count) throws SBSBaseException {
         this.check_for_session();
         JSONObject request = new JSONObject();
         this.put_wrapper(request, "action", "get_last_entry_ids");
@@ -311,7 +307,7 @@ public class ServerDatabaseSession {
         } catch (JSONException e) {
             throw new SBSBaseException();
         }
-        ArrayList<Entry_id_timestamp> entry_references = new ArrayList<Entry_id_timestamp>();
+        LinkedList<Entry_id_timestamp> entry_references = new LinkedList<Entry_id_timestamp>();
 
         for (int i = 0; i < entry_id_timestamps.length(); i++) {
             JSONArray id_timestamp = entry_id_timestamps.getJSONArray(i);
@@ -319,13 +315,30 @@ public class ServerDatabaseSession {
             Integer timestamp = id_timestamp.getInt(1);
             entry_references.add(new Entry_id_timestamp(id, timestamp));
         }
-        Entry_id_timestamp[] return_value = new Entry_id_timestamp[entry_id_timestamps.length()];
-        return_value = entry_references.toArray(return_value);
-
-        return return_value;
+        return entry_references;
     }
 
-
+    public Entry_id_timestamp send_entry(BaseEntry a) throws SBSBaseException{
+        this.check_for_session();
+        //only text right now
+        JSONObject request = new JSONObject();
+        this.put_wrapper(request, "action", "send_entry");
+        this.put_wrapper(request, "session_id", this.session_id);
+        this.put_wrapper(request, "title", a.getTitle());
+        this.put_wrapper(request, "date_user", a.getEntry_time());
+        this.put_wrapper(request, "attachment", ((AttachmentText)a.getAttachment()).getText());
+        this.put_wrapper(request, "attachment_type", "text");
+        this.put_wrapper(request, "experiment_id", a.getExperiment_id().toString());
+        JSONObject result = this.send_json(request);
+        this.check_for_success(result);
+        JSONArray entry_id_timestamp = null;
+        try {
+            entry_id_timestamp = result.getJSONArray("entry_id_timestamp");
+        } catch (JSONException e) {
+            throw new SBSBaseException();
+        }
+        return new Entry_id_timestamp(entry_id_timestamp.getInt(0), entry_id_timestamp.getInt(1));
+    }
 
 
 }

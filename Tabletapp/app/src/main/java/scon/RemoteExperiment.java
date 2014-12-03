@@ -24,8 +24,6 @@ public class RemoteExperiment implements Comparable<RemoteExperiment> {
 
     }
 
-
-
     @Override
     public int compareTo(RemoteExperiment other) {
         return this.id.compareTo(other.id);
