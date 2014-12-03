@@ -16,13 +16,13 @@ public class BaseEntry {
      * @value
      * @since 1.0
      */
-    protected Integer Project_id;
+    protected Integer project_id;
     /**
      *This is the title of an LocalEntry
      * @value
      * @since 1.0
      */
-    protected Integer Experiment_id;
+    protected Integer experiment_id;
     /**
      *This is the title of an LocalEntry
      * @value
@@ -41,25 +41,24 @@ public class BaseEntry {
      * @since 1.0
      */
     protected int attachment_type = 0; //no access yet
-    //FIXME these might need to be changed to Integer or Timestamp
     /**
      *This is the sync_time a entry only got if it's synced with the Server, this means that it is the time when the server received the LocalEntry.
      * @value
      * @since 1.0
      */
-    protected String sync_time;
+    protected Integer sync_time;
     /**
      *This is the entry_time it holds the time, the LocalEntry was finished in the app.
      * @value
      * @since 1.0
      */
-    protected String entry_time;
+    protected Integer entry_time;
     /**
      *This is the entry_time it holds the time, the LocalEntry was finished in the app.
      * @value
      * @since 1.0
      */
-    protected String change_time;
+    protected Integer change_time;
     /**
      *This Value holds the UserObject.
      * @value
@@ -67,9 +66,26 @@ public class BaseEntry {
      */
     protected User user;
 
+    public BaseEntry(User user, Integer project_id, Integer experiment_id, Integer remote_id, Integer entry_time, Integer sync_time, Integer change_time, String title, Object attachment, int attachment_type) {
+        this.attachment = attachment;
+        this.attachment_type = attachment_type;
+        this.entry_time = entry_time;
+        this.sync_time = sync_time;
+        this.change_time = change_time;
+        this.title = title;
+        this.user = user;
+        this.project_id = project_id;
+        this.experiment_id = experiment_id;
+        this.remote_id = remote_id;
+    }
+
+
+    public Integer getProject_id() {
+        return this.project_id;
+    }
 
     public Integer getExperiment_id() {
-        return this.Experiment_id;
+        return this.experiment_id;
     }
 
     public Integer getRemote_id() {
@@ -88,15 +104,15 @@ public class BaseEntry {
         return this.attachment_type;
     }
 
-    public String getSync_time() {
+    public Integer getSync_time() {
         return this.sync_time;
     }
 
-    public String getEntry_time() {
+    public Integer getEntry_time() {
         return this.entry_time;
     }
 
-    public String getChange_time() {
+    public Integer getChange_time() {
         return this.change_time;
     }
 

@@ -292,7 +292,10 @@ public class ServerDatabaseSession {
         return remoteExperiment_list;
     }
 
-    public LinkedList<Entry_id_timestamp> get_last_entry_references(Integer session_id, Integer experiment_id, Integer entry_count) throws SBSBaseException {
+    public LinkedList<Entry_id_timestamp> get_last_entry_references(Integer experiment_id, Integer entry_count, LinkedList<Entry_id_timestamp> excluded) throws SBSBaseException {
+        //excluded is ignored right now but in the future, you will be able
+        //to list entries you do not like to be shown so you only will
+        //see entries which you do not know.
         this.check_for_session();
         JSONObject request = new JSONObject();
         this.put_wrapper(request, "action", "get_last_entry_ids");
@@ -325,9 +328,9 @@ public class ServerDatabaseSession {
         this.put_wrapper(request, "action", "send_entry");
         this.put_wrapper(request, "session_id", this.session_id);
         this.put_wrapper(request, "title", a.getTitle());
-        this.put_wrapper(request, "date_user", a.getEntry_time());
+        this.put_wrapper(request, "date_user", a.getEntry_time().toString());
         this.put_wrapper(request, "attachment", ((AttachmentText)a.getAttachment()).getText());
-        this.put_wrapper(request, "attachment_type", "text");
+        this.put_wrapper(request, "attachment_type", "0");
         this.put_wrapper(request, "experiment_id", a.getExperiment_id().toString());
         JSONObject result = this.send_json(request);
         this.check_for_success(result);
@@ -339,6 +342,20 @@ public class ServerDatabaseSession {
         }
         return new Entry_id_timestamp(entry_id_timestamp.getInt(0), entry_id_timestamp.getInt(1));
     }
+
+    public RemoteEntry get_entry(Entry_id_timestamp a) throws SBSBaseException{
+        this.check_for_session();
+        JSONObject request = new JSONObject();
+        this.put_wrapper(request, "action", "get_entry");
+        this.put_wrapper(request, "session_id", this.session_id);
+        this.put_wrapper(request, "entry_id", a.getId().toString());
+        this.put_wrapper(request, "entry_change_time", a.getLast_change().toString());
+        JSONObject result = this.send_json(request);
+        this.check_for_success(result);
+        JSONArray entry_id_timestamp = null;
+        return new RemoteEntry();
+    }
+
 
 
 }
