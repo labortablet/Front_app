@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.LinkedList;
 
 import exceptions.SBSBaseException;
+import imports.User;
 
 public class ref_client {
 	public static void main(String[] args) {
@@ -17,10 +18,11 @@ public class ref_client {
 			System.exit(1);
 		};
         System.out.println("URL nor malformed");
-		String user = "fredi@uni-siegen.de";
-		String pw_h = "test";
+		String username = "fredi@uni-siegen.de";
+		String password = "test";
         System.out.println("Username and PW set");
-		ServerDatabaseSession SDS = new ServerDatabaseSession(url, user, pw_h);
+        User user = new User(username, password);
+		ServerDatabaseSession SDS = new ServerDatabaseSession(url, user);
 		try {
             SDS.start_session();
             LinkedList<RemoteProject> remoteProject_list = SDS.get_projects();

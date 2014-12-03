@@ -48,7 +48,7 @@ public class LocalService extends Service {
            e.printStackTrace();
            return 1;
        }
-      SDS = new ServerDatabaseSession(url, user.getUser_email(), user.getPw_hash());
+      SDS = new ServerDatabaseSession(url, user);
 
      if(isNetworkAvailable()){
 
